@@ -3,28 +3,47 @@ import 'package:json_annotation/json_annotation.dart';
 part 'issue_model.g.dart';
 
 @JsonSerializable()
-class Issue { //model of github issue
-  final int issueID;
-  final String state;
-  final String title;
-  final DateTime logged_at;
-  final DateTime? closed_at;
-  final String? closed_by;
-  final int? commentsNumber;
-  final String repository;
+
+///Model of github issues
+class Issue {
   //final List<Label> labels;
 
-
-  Issue({ required this.issueID, required this.state, required this.title, required this.logged_at, required this.closed_at,
-    required this.closed_by, required this.commentsNumber
-    , required this.repository
+  ///Model of github issues
+  Issue({
+    required this.issueID,
+    required this.state,
+    required this.title,
+    required this.loggedAt,
+    required this.closedAt,
+    required this.closedBy,
+    required this.commentsNumber,
+    required this.repository,
     //,this.labels
   });
+  ///Conversion of JSON into issue object
+  factory Issue.fromJson(Map<String, dynamic> json) => _$IssueFromJson(json);
+  ///ID of issue retrieved from github API
+  final int issueID;
+  ///state of issue
+  final String state;
+  ///title of issue
+  final String title;
+  ///time issue was logged
+  final DateTime loggedAt;
+  ///time issue was closed, null if still open
+  final DateTime? closedAt;
+  ///username of user who closed issue, null if still open
+  final String? closedBy;
+  ///number of comments in issue, 0 if none
+  final int? commentsNumber;
+  ///repo issue belongs to
+  final String repository;
 
-  factory Issue.fromJson(Map<String, dynamic> json) => _$IssueFromJson(json); //Conversion of JSON into object issue
-  Map<String, dynamic> toJson() => _$IssueToJson(this); //conversion of issues into JSON
- }
+  ///conversion of issues into JSON
+  Map<String, dynamic> toJson() => _$IssueToJson(this);
+}
+///Array of labels for an issue
+class Label {
 
-class Label{ //Array of labels for an issue
 
 }

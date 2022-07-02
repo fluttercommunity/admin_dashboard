@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-
+/// Utility class used to create and display dialogs
 class ViewUtil {
-  static void showMessage(String title, String message, BuildContext context){
-    // set up the AlertDialog
-    Widget okButton = TextButton(
-      child: Text("OK"),
+
+  /// set up the AlertDialog
+  static void showMessage(String title, String message, BuildContext context) {
+    final Widget okButton = TextButton(
+      child: const Text('OK'),
       onPressed: () {
         Navigator.pop(context);
       },
     );
 
-    AlertDialog alert = AlertDialog(
+    final alert = AlertDialog(
       title: Text(title),
       content: Text(message),
       actions: [
@@ -20,8 +20,8 @@ class ViewUtil {
       ],
     );
 
-    // show the dialog
-    showDialog(
+    /// show the dialog
+    showDialog<AlertDialog>(
       context: context,
       builder: (BuildContext context) {
         return alert;

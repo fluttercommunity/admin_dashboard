@@ -1,22 +1,22 @@
-import 'package:admin_dashboard/main.dart';
 import 'package:admin_dashboard/page/login_page.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-//The route generator that handles navigation throughout the app\
+///The route generator that handles navigation throughout the app\
 
 class RouteGenerator {
-  static const String loginPage = '/';
   RouteGenerator._();
+  ///login page path
+  static const String loginPage = '/';
 
-  //generateRoute method decides which page to open depending on the path provided to the navigator
-
+  ///decides which page to open depending on the path provided to the navigator
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case loginPage:
-         return MaterialPageRoute(builder: (_) =>  const LoginPage(),);
+        return MaterialPageRoute(
+          builder: (_) => const LoginPage(),
+        );
       default:
-        throw FormatException("Route not found");
+        throw const FormatException('Route not found');
     }
   }
 }
