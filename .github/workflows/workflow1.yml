@@ -54,6 +54,6 @@ jobs:
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GITWORKFLOW_3437B }}'
-          projectId: gitworkflow-3437b
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ADMIN_DASHBOARD_B9503 }}'
+          projectId: admin-dashboard-b9503
           channelId: live
