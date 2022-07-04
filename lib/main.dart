@@ -8,10 +8,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
-      apiKey: 'AIzaSyBCY9R-Wo5IH6yWgweqVGH0ytfz58KEdh4',
-      appId: '1:617118834791:android:56b52f80e1597f3dcff4c2',
-      messagingSenderId: '617118834791',
-      projectId: 'admin-dashboard-b9503',
+      apiKey: EnvironmentConfig.apiKey,
+      appId: EnvironmentConfig.appId,
+      messagingSenderId: EnvironmentConfig.messagingSenderId,
+      projectId: EnvironmentConfig.projectId,
     ),
   );
   runApp(
@@ -50,4 +50,8 @@ class EnvironmentConfig {
       String.fromEnvironment('admin_dashboard_redirectUrl');
   ///logged in client Token which is stored as a environment variable
   static const token = String.fromEnvironment('admin_dashboard_token');
+  static const apiKey = String.fromEnvironment('apiKey');
+  static const appId = String.fromEnvironment('appId');
+  static const messagingSenderId = String.fromEnvironment('messagingSenderId');
+  static const projectId = String.fromEnvironment('projectId');
 }
