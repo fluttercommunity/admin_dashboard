@@ -47,6 +47,8 @@ jobs:
 #        env:
 #          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
 #          PROJECT_ID: default
+      - name: npx firebase-tools
+        run: npx firebase-tools
 
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
