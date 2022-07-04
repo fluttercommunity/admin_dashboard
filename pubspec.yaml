@@ -26,6 +26,8 @@ dependencies:
   json_serializable: ^6.2.0
   json_annotation:
   provider: ^6.0.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

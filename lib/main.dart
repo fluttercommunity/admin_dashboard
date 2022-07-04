@@ -6,7 +6,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: 'AIzaSyBCY9R-Wo5IH6yWgweqVGH0ytfz58KEdh4',
+      appId: '1:617118834791:android:56b52f80e1597f3dcff4c2',
+      messagingSenderId: '617118834791',
+      projectId: 'admin-dashboard-b9503',
+    ),
+  );
   runApp(
     const ProviderScope(
       child: MyAppRoutes(),
