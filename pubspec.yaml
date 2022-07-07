@@ -1,0 +1,43 @@
+name: admin_dashboard
+description: Admin Dashboard to assist admins and maintainers by pinging them to repositories that require attention
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.16.2 <3.0.0"
+
+# Dependencies specify other packages that your package needs in order to work.
+dependencies:
+  flutter:
+    sdk: flutter
+
+  build_runner:
+  cupertino_icons: ^1.0.2
+#  firebase_auth: ^3.3.19
+  firebase_auth: ^3.4.1
+#  firebase_core: ^1.17.1
+  firebase_core: ^1.19.1
+  flutter_riverpod: ^1.0.0
+  github_sign_in: ^0.0.5-dev.4
+  http: ^0.13.4
+  json_serializable: ^6.2.0
+  json_annotation:
+  provider: ^6.0.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  injectable_generator: ^1.5.2
+
+  flutter_lints:
+
+# The following section is specific to Flutter.
+flutter:
+
+  uses-material-design: true
