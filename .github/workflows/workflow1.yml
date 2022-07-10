@@ -6,7 +6,7 @@ on:
   pull_request_target:
     types: [labeled]
     branches:
-      - master
+      - main
 jobs:
   build_web:
     name: Build Flutter (Web)
