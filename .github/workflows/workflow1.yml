@@ -11,7 +11,7 @@ jobs:
   build_web:
     name: Build Flutter (Web)
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'safe to test') || github.event.action == 'push'
+    if: contains(github.event.pull_request.labels.*.name, 'safe to test') != github.event.action == 'pull_request'
     steps:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
