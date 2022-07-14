@@ -66,4 +66,5 @@ class EnvironmentConfig {
   static const messagingSenderId = String.fromEnvironment('messagingSenderId');
   ///Our projectID from the firebase console as an environment variable
   static const projectId = String.fromEnvironment('projectId');
+
 }
