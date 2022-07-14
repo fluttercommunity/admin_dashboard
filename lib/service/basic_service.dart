@@ -1,6 +1,7 @@
 import 'package:admin_dashboard/dto/admin_dashboard_cache_model.dart';
 import 'package:admin_dashboard/dto/issue_model.dart';
 import 'package:admin_dashboard/dto/pull_model.dart';
+import 'package:admin_dashboard/dto/repo_model.dart';
 import 'package:flutter/cupertino.dart';
 
 ///The interface used to define methods that the GitHub Service Implementor
@@ -29,4 +30,8 @@ abstract class BasicServiceInterface {
   ///adds PR to a specific repo as defined in the PR param
   Future<Pull> addPull(Pull pr);
 
+  ///retrieves all repositories belonging to a specific organization
+  Future<List<SimpleRepo>> getAllRepos(  BuildContext context,
+      AdminDashboardCache cache,
+  );
 }

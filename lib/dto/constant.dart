@@ -13,4 +13,22 @@ class Constants {
   ///Link to the activity log in our firebase collection
   static const String repoLogLink =
       'https://admin-dashboard-b9503-default-rtdb.firebaseio.com/activity_log';
+  ///Flutter community organization's name as a constant
+  static const String flc = 'fluttercommunity';
+  ///Repos keyword constant for the github API
+  static const String repos = 'repos';
+  ///Start of github URL for the API
+  static const String gitApi = 'https://api.github.com';
+  ///Orgs keyword for the github API
+  static const String orgs = 'orgs';
+  ///Text for the repo page from the drawer
+  static const String printRepos = 'Print a list of all repositories';
+  ///Text for the login page from the drawer
+  static const String login = 'login';
+  ///Title for the repo page
+  static const String repoTitle = 'Repository page';
+  ///Firebase Project name
+  static const String projectName = 'admin-dashboard';
+  ///Welcome page title
+  static const String welcomePageTitle = 'Flutter Admin Dashboard';
 }
