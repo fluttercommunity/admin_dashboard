@@ -53,8 +53,16 @@ jobs:
       - name: Deploy to Firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-#          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ADMIN_DASHBOARD_B9503 }}'
+          admin_dashboard_clientSecret: '${{ secrets.ADMIN_DASHBOARD_CLIENTSECRET }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ADMIN_DASHBOARD_B9503 }}'
+          messagingSenderID : '${{ secrets.MESSAGINGSENDERID}}'
+          appId: '${{ secrets.appId}}'
+          apiKey : '${{ secrets.apiKey}}'
+          admin_dashboard_token : '${{ secrets.ADMIN_DASHBOARD_TOKEN}}'
+          admin_dashboard_clientId: '${{ secrets.ADMIN_DASHBOARD_CLIENTID}}'
+          admin_dashboard_redirectUrl : '${{ secrets.ADMIN_DASHBOARD_REDIRECTURL}}'
+
+
+
           projectId: admin-dashboard-b9503
           channelId: live
