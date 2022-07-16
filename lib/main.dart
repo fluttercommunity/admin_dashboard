@@ -34,7 +34,10 @@ class MyAppRoutes extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    const String appToken = String.fromEnvironment("MY_ADMIN_DASHBOARD_TOKEN");
+    print('TOKEN ==> $appToken');
     final cache = ref.read(cacheProvider);
+    cache.token = appToken;
     final fire = ref.read(fireBaseService);
     return MaterialApp(
       onGenerateTitle: (context) => Constants.welcomePageTitle,
