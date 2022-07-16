@@ -42,7 +42,7 @@ jobs:
           fail_on_empty: true
       - name: print_env_var_security_risk
         run: cat .env
-      - name: build_app --dart-define=ADMIN_DASHBOARD_TOKEN=MADGI
+      - name: build_app --dart-define="ADMIN_DASHBOARD_TOKEN=MADGI"
         run: flutter build web
         env:
           ADMIN_DASHBOARD_TOKEN: NOHA
