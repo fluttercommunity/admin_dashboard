@@ -55,7 +55,7 @@ class EnvironmentConfig {
   ///logged in client Token which is stored as a environment variable
 
   //static final token = dotenv.get('MY_ADMIN_DASHBOARD_TOKEN', fallback: 'no .env');
-  static const token = String.fromEnvironment('admin_dashboard_token',
+  static const token = String.fromEnvironment('ADMIN_DASHBOARD_TOKEN',
       defaultValue: 'No ENV VAR');
 
 
