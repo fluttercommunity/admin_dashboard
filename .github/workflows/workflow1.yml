@@ -22,11 +22,6 @@ jobs:
         run:  flutter --version
       - run: flutter pub get
       - run: flutter config --enable-web
-      - name: build_app
-        run: flutter build web
-# add here the .env must wait for previous step
-#    needs: build_web
-
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v1.3
         with:
@@ -39,9 +34,13 @@ jobs:
           envkey_APPID: ${{ secrets.APPID }}
           envkey_MESSAGING_SENDER_ID: ${{ secrets.MESSAGING_SENDER_ID }}
 
-          directory: build/web/assets
+#          directory: build/web/assets
           file_name: .env
           fail_on_empty: true
+      - name: build_app
+        run: flutter build web
+# add here the .env must wait for previous step
+#    needs: build_web
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
