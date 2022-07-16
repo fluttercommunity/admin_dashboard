@@ -61,7 +61,7 @@ class FireBaseService implements BasicServiceInterface {
         url,
         headers: {
           'Authorization': 'Bearer ${EnvironmentConfig.token}',
-          // 'Authorization': 'Bearer ${cache.token}',
+          //   'Authorization': 'Bearer ${cache.token}',
         },
       );
       if (response.statusCode != 200) {
