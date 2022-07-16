@@ -53,29 +53,29 @@ class EnvironmentConfig {
   // Or with fallback.
 //  String bar = dotenv.get('MISSING_VAR_NAME', fallback: 'sane-default');
   ///logged in client Token which is stored as a environment variable
-  static final token = dotenv.get('admin_dashboard_token', fallback: 'no .env');
+  static final token = dotenv.get('ADMIN_DASHBOARD_TOKEN', fallback: 'no .env');
   // static const token = String.fromEnvironment('admin_dashboard_token');
 
 
   ///logged in client ID which is stored as a environment variable
   static final clientId =
-  dotenv.get('admin_dashboard_clientId', fallback: 'no .env');
+  dotenv.get('ADMIN_DASHBOARD_CLIENTID', fallback: 'no .env');
   ///logged in client Secret which is stored as a environment variable
   static final clientSecret =
-  dotenv.get('admin_dashboard_clientSecret', fallback: 'no .env');
+  dotenv.get('ADMIN_DASHBOARD_CLIENTSECRET', fallback: 'no .env');
   ///The environment variable containing the redirect URL of GitHub
   static final redirectUrl =
-  dotenv.get('admin_dashboard_redirectUrl', fallback: 'no .env');
+  dotenv.get('ADMIN_DASHBOARD_REDIRECTURL', fallback: 'no .env');
 
   ///our firebase's API key as an environment variable
-  static final apiKey = dotenv.get('apiKey', fallback: 'no .env');
+  static final apiKey = dotenv.get('APIKEY', fallback: 'no .env');
   ///our android appID from the firebase console as an environment variable
-  static final appId = dotenv.get('appId', fallback: 'no .env');
+  static final appId = dotenv.get('APPID', fallback: 'no .env');
   ///our messagingSenderID from the firebase console as an environment variable
   static final messagingSenderId =
-  dotenv.get('messagingSenderId', fallback: 'no .env');
+  dotenv.get('MESSAGINGSENDERID', fallback: 'no .env');
   ///Our projectID from the firebase console as an environment variable
-  static final projectId = dotenv.get('projectId', fallback: 'no .env');
+  static final projectId = dotenv.get('PROJECTID', fallback: 'no .env');
 
 }
 

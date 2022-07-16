@@ -37,8 +37,8 @@ jobs:
           envkey_projectId: admin-dashboard-b9503
           file_name: .env
           fail_on_empty: true
-      - name: print_env_var_security_risk
-        run: cat .env
+#      - name: print_env_var_security_risk
+#        run: cat .env
       - name: build_app
         run: flutter build web
 #      - name: Make envfile 2
