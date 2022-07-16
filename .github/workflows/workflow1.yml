@@ -70,6 +70,8 @@ jobs:
     name: Deploy Web to Firebase Hosting
     needs: build_web
     runs-on: ubuntu-latest
+    env:
+      admin_dashboard_token: NOHA
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
@@ -99,5 +101,5 @@ jobs:
           projectId: admin-dashboard-b9503
           channelId: live
 #        env:
-#          admin_dashboard_token: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
+#          admin_dashboard_token: NOHA
 #          envkey_ADMIN_DASHBOARD_TOKEN: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
