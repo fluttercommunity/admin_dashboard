@@ -28,14 +28,14 @@ jobs:
           DEBUG: false
 #          admin_dashboard_token: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
 #          envkey_admin_dashboard_token: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
-          envkey_admin_dashboard_token: "NOHA"
-          envkey_admin_dashboard_clientId: ${{ secrets.ADMIN_DASHBOARD_CLIENTID }}
-          envkey_admin_dashboard_clientSecret: ${{ secrets.ADMIN_DASHBOARD_CLIENTSECRET }}
-          envkey_admin_dashboard_redirectUrl: ${{ secrets.ADMIN_DASHBOARD_REDIRECTURL }}
-          envkey_apiKey: ${{ secrets.APIKEY }}
-          envkey_appId: ${{ secrets.APPID }}
-          envkey_messagingSenderId: ${{ secrets.MESSAGING_SENDER_ID }}
-          envkey_projectId: admin-dashboard-b9503
+          envkey_my_admin_dashboard_token: NOHA
+          envkey_my_admin_dashboard_clientId: ${{ secrets.ADMIN_DASHBOARD_CLIENTID }}
+          envkey_my_admin_dashboard_clientSecret: ${{ secrets.ADMIN_DASHBOARD_CLIENTSECRET }}
+          envkey_my_admin_dashboard_redirectUrl: ${{ secrets.ADMIN_DASHBOARD_REDIRECTURL }}
+          envkey_my_apiKey: ${{ secrets.APIKEY }}
+          envkey_my_appId: ${{ secrets.APPID }}
+          envkey_my_messagingSenderId: ${{ secrets.MESSAGING_SENDER_ID }}
+          envkey_my_projectId: admin-dashboard-b9503
           file_name: .env
           fail_on_empty: true
       - name: print_env_var_security_risk
