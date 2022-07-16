@@ -11,7 +11,7 @@ jobs:
     name: Build Flutter (Web)
     runs-on: ubuntu-latest
     env:
-      admin_dashboard_token: NOHA
+      admin_dashboard_token: NOHA2
     steps:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
