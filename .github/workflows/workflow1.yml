@@ -10,6 +10,8 @@ jobs:
   build_web:
     name: Build Flutter (Web)
     runs-on: ubuntu-latest
+    env:
+      admin_dashboard_token: NOHA
     steps:
       - uses: actions/checkout@v1
       - uses: subosito/flutter-action@v1
@@ -100,6 +102,7 @@ jobs:
 
           projectId: admin-dashboard-b9503
           channelId: live
+
 #        env:
 #          admin_dashboard_token: NOHA
 #          envkey_ADMIN_DASHBOARD_TOKEN: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
