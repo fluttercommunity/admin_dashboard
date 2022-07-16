@@ -40,6 +40,6 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-    - .env
+#    - .env
     - amer.env
   uses-material-design: true
