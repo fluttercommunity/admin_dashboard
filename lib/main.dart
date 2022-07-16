@@ -52,7 +52,9 @@ class MyAppRoutes extends ConsumerWidget {
 class EnvironmentConfig {
   // Or with fallback.
 //  String bar = dotenv.get('MISSING_VAR_NAME', fallback: 'sane-default');
-
+  ///logged in client Token which is stored as a environment variable
+  static final token = dotenv.get('admin_dashboard_token', fallback: 'no .env');
+  // static const token = String.fromEnvironment('admin_dashboard_token');
 
 
   ///logged in client ID which is stored as a environment variable
@@ -64,9 +66,7 @@ class EnvironmentConfig {
   ///The environment variable containing the redirect URL of GitHub
   static final redirectUrl =
   dotenv.get('admin_dashboard_redirectUrl', fallback: 'no .env');
-  ///logged in client Token which is stored as a environment variable
-  static final token = dotenv.get('admin_dashboard_token', fallback: 'no .env');
-  // static const token = String.fromEnvironment('admin_dashboard_token');
+
   ///our firebase's API key as an environment variable
   static final apiKey = dotenv.get('apiKey', fallback: 'no .env');
   ///our android appID from the firebase console as an environment variable

@@ -26,14 +26,15 @@ jobs:
         uses: SpicyPizza/create-envfile@v1.3
         with:
           DEBUG: false
-          admin_dashboard_token: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
-          admin_dashboard_clientId: ${{ secrets.ADMIN_DASHBOARD_CLIENTID }}
-          admin_dashboard_clientSecret: ${{ secrets.ADMIN_DASHBOARD_CLIENTSECRET }}
-          admin_dashboard_redirectUrl: ${{ secrets.ADMIN_DASHBOARD_REDIRECTURL }}
-          apiKey: ${{ secrets.APIKEY }}
-          appId: ${{ secrets.APPID }}
-          messagingSenderId: ${{ secrets.MESSAGING_SENDER_ID }}
-          projectId: admin-dashboard-b9503
+#          admin_dashboard_token: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
+          envkey_admin_dashboard_token: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
+          envkey_admin_dashboard_clientId: ${{ secrets.ADMIN_DASHBOARD_CLIENTID }}
+          envkey_admin_dashboard_clientSecret: ${{ secrets.ADMIN_DASHBOARD_CLIENTSECRET }}
+          envkey_admin_dashboard_redirectUrl: ${{ secrets.ADMIN_DASHBOARD_REDIRECTURL }}
+          envkey_apiKey: ${{ secrets.APIKEY }}
+          envkey_appId: ${{ secrets.APPID }}
+          envkey_messagingSenderId: ${{ secrets.MESSAGING_SENDER_ID }}
+          envkey_projectId: admin-dashboard-b9503
           file_name: .env
           fail_on_empty: true
       - name: build_app
@@ -92,5 +93,6 @@ jobs:
 
           projectId: admin-dashboard-b9503
           channelId: live
-#        env:
+        env:
+          admin_dashboard_token: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
 #          envkey_ADMIN_DASHBOARD_TOKEN: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
