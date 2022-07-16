@@ -53,7 +53,7 @@ class EnvironmentConfig {
   // Or with fallback.
 //  String bar = dotenv.get('MISSING_VAR_NAME', fallback: 'sane-default');
   ///logged in client Token which is stored as a environment variable
-  static final token = dotenv.get('my_ADMIN_DASHBOARD_TOKEN', fallback: 'no .env');
+  static final token = dotenv.get('MY_ADMIN_DASHBOARD_TOKEN', fallback: 'no .env');
   // static const token = String.fromEnvironment('admin_dashboard_token');
 
 
