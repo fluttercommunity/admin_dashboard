@@ -22,12 +22,26 @@ jobs:
         run:  flutter --version
       - run: flutter pub get
       - run: flutter config --enable-web
-      - run: flutter build web
+      - name: build_app
+        run: flutter build web
+# add here the .env must wait for previous step
+#    needs: build_web
+
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_DEBUG: false
+          envkey_SOME_API_KEY: "123456abcdef"
+          envkey_SECRET_KEY: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
+          directory: build/web
+          file_name: .env
+          fail_on_empty: true
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
           name: web-build
           path: build/web
+
   deploy_web:
     name: Deploy Web to Firebase Hosting
     needs: build_web
