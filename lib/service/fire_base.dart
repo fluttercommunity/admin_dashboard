@@ -147,11 +147,11 @@ class FireBaseService implements BasicServiceInterface {
             final response = await http.get(
               url,
               headers: {
-                'Authorization': 'Bearer ${cache.token}',
+                'Authorization': 'Bearer ${EnvironmentConfig.token}',
               },
             );
             if (response.statusCode != 200) {
-              debugPrint('status code = ${response.statusCode} and token is ${cache.token}');
+              debugPrint('status code = ${response.statusCode} and token is ${EnvironmentConfig.token}');
               return result;
             }
 
