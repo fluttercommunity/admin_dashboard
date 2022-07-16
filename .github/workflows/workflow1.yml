@@ -43,7 +43,7 @@ jobs:
       - name: print_env_var_security_risk
         run: cat .env
       - name: build_app
-        run: flutter build web --dart-define="ADMIN_DASHBOARD_TOKEN=MADGI"
+        run: flutter build web --dart-define="ADMIN_DASHBOARD_TOKEN2=MADGI"
         env:
           ADMIN_DASHBOARD_TOKEN: NOHA
       - name: print_env_var_security_risk_2

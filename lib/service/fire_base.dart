@@ -8,6 +8,8 @@ import 'package:admin_dashboard/service/basic_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
+import '../main.dart';
+
 
 ///implements the methods that Firebase as a middleware
 ///will provide for GitHub
@@ -58,7 +60,8 @@ class FireBaseService implements BasicServiceInterface {
       final response = await http.get(
         url,
         headers: {
-          'Authorization': 'Bearer ${cache.token}',
+          'Authorization': 'Bearer ${EnvironmentConfig.token}',
+          // 'Authorization': 'Bearer ${cache.token}',
         },
       );
       if (response.statusCode != 200) {
