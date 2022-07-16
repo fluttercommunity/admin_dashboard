@@ -27,7 +27,8 @@ jobs:
         with:
           DEBUG: false
 #          admin_dashboard_token: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
-          envkey_admin_dashboard_token: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
+#          envkey_admin_dashboard_token: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
+          envkey_admin_dashboard_token: "NOHA"
           envkey_admin_dashboard_clientId: ${{ secrets.ADMIN_DASHBOARD_CLIENTID }}
           envkey_admin_dashboard_clientSecret: ${{ secrets.ADMIN_DASHBOARD_CLIENTSECRET }}
           envkey_admin_dashboard_redirectUrl: ${{ secrets.ADMIN_DASHBOARD_REDIRECTURL }}
@@ -37,10 +38,12 @@ jobs:
           envkey_projectId: admin-dashboard-b9503
           file_name: .env
           fail_on_empty: true
-#      - name: print_env_var_security_risk
-#        run: cat .env
+      - name: print_env_var_security_risk
+        run: cat .env
       - name: build_app
         run: flutter build web
+      - name: print_env_var_security_risk_2
+        run: cat build/web/assets/.env
 #      - name: Make envfile 2
 #        uses: SpicyPizza/create-envfile@v1.3
 #        with:
