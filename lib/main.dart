@@ -66,6 +66,7 @@ class EnvironmentConfig {
   dotenv.get('admin_dashboard_redirectUrl', fallback: 'no .env');
   ///logged in client Token which is stored as a environment variable
   static final token = dotenv.get('admin_dashboard_token', fallback: 'no .env');
+  // static const token = String.fromEnvironment('admin_dashboard_token');
   ///our firebase's API key as an environment variable
   static final apiKey = dotenv.get('apiKey', fallback: 'no .env');
   ///our android appID from the firebase console as an environment variable
