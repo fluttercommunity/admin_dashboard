@@ -39,5 +39,5 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-    - .env
+  - .env
   uses-material-design: true
