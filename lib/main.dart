@@ -5,14 +5,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
+import 'package:cloud_functions/cloud_functions.dart';
 
 
 
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(
     name: Constants.projectName,
     options:  FirebaseOptions(
@@ -22,6 +22,12 @@ Future<void> main() async {
       projectId: EnvironmentConfig.projectId,
     ),
   );
+
+  final functions = FirebaseFunctions.instance;
+  final pluginConstants = functions.pluginConstants;
+  for (var key in pluginConstants.keys){
+    debugPrint('key ==> $key');
+  }
   runApp(
     const ProviderScope(
       child: MyAppRoutes(),

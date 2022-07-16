@@ -153,11 +153,11 @@ class FireBaseService implements BasicServiceInterface {
     // } catch (e) {
     //   print(e.toString());
     // }
-    final functions = FirebaseFunctions.instance;
-    final pluginConstants = functions.pluginConstants;
-    for (var key in pluginConstants.keys){
-      debugPrint('key ==> $key');
-    }
+    // final functions = FirebaseFunctions.instance;
+    // final pluginConstants = functions.pluginConstants;
+    // for (var key in pluginConstants.keys){
+    //   debugPrint('key ==> $key');
+    // }
 
 
 
