@@ -30,7 +30,7 @@ jobs:
           DEBUG: false
 #          admin_dashboard_token: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
 #          envkey_admin_dashboard_token: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
-          envkey_my_admin_dashboard_token: NOHA
+          envkey_my_admin_dashboard_token: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
 #          envkey_my_admin_dashboard_clientId: ${{ secrets.ADMIN_DASHBOARD_CLIENTID }}
 #          envkey_my_admin_dashboard_clientSecret: ${{ secrets.ADMIN_DASHBOARD_CLIENTSECRET }}
 #          envkey_my_admin_dashboard_redirectUrl: ${{ secrets.ADMIN_DASHBOARD_REDIRECTURL }}
@@ -43,9 +43,7 @@ jobs:
       - name: print_env_var_security_risk
         run: cat amer.env
       - name: build_app
-        run: flutter build web --dart-define="ADMIN_DASHBOARD_TOKEN2=MADGI"
-        env:
-          ADMIN_DASHBOARD_TOKEN: NOHA
+        run: flutter build web
       - name: print_env_var_security_risk_2
         run: cat build/web/assets/amer.env
 #      - name: Make envfile 2
