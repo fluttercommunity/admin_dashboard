@@ -26,6 +26,7 @@ dependencies:
   json_serializable: ^6.2.0
   json_annotation:
   easy_sidemenu: ^0.3.1
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -34,7 +35,9 @@ dev_dependencies:
 
   flutter_lints:
 
+
 # The following section is specific to Flutter.
 flutter:
-
+  assets:
+    - .env
   uses-material-design: true

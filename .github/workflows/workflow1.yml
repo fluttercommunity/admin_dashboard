@@ -31,8 +31,14 @@ jobs:
         uses: SpicyPizza/create-envfile@v1.3
         with:
           envkey_DEBUG: false
-          envkey_SOME_API_KEY: "123456abcdef"
-          envkey_SECRET_KEY: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
+          envkey_ADMIN_DASHBOARD_TOKEN: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
+          envkey_ADMIN_DASHBOARD_CLIENTID: ${{ secrets.ADMIN_DASHBOARD_CLIENTID }}
+          envkey_ADMIN_DASHBOARD_CLIENTSECRET: ${{ secrets.ADMIN_DASHBOARD_CLIENTSECRET }}
+          envkey_ADMIN_DASHBOARD_REDIRECTURL: ${{ secrets.ADMIN_DASHBOARD_REDIRECTURL }}
+          envkey_APIKEY: ${{ secrets.APIKEY }}
+          envkey_APPID: ${{ secrets.APPID }}
+          envkey_MESSAGING_SENDER_ID: ${{ secrets.MESSAGING_SENDER_ID }}
+
           directory: build/web
           file_name: .env
           fail_on_empty: true
