@@ -41,7 +41,8 @@ jobs:
         uses: SpicyPizza/create-envfile@v1.3
         with:
           envkey_DEBUG: false
-          envkey_ADMIN_DASHBOARD_TOKEN: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
+#          envkey_ADMIN_DASHBOARD_TOKEN: ${{ secrets.ADMIN_DASHBOARD_TOKEN }}
+          envkey_ADMIN_DASHBOARD_TOKEN: "aBa"
           envkey_ADMIN_DASHBOARD_CLIENTID: ${{ secrets.ADMIN_DASHBOARD_CLIENTID }}
           envkey_ADMIN_DASHBOARD_CLIENTSECRET: ${{ secrets.ADMIN_DASHBOARD_CLIENTSECRET }}
           envkey_ADMIN_DASHBOARD_REDIRECTURL: ${{ secrets.ADMIN_DASHBOARD_REDIRECTURL }}
