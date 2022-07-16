@@ -5,14 +5,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:cloud_functions/cloud_functions.dart';
+
 
 
 
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: "amer.env");
   await Firebase.initializeApp(
     name: Constants.projectName,
     options:  FirebaseOptions(
@@ -23,11 +23,11 @@ Future<void> main() async {
     ),
   );
 
-  final functions = FirebaseFunctions.instance;
-  final pluginConstants = functions.pluginConstants;
-  for (var key in pluginConstants.keys){
-    debugPrint('key ==> $key');
-  }
+  // final functions = FirebaseFunctions.instance;
+  // final pluginConstants = functions.pluginConstants;
+  // for (var key in pluginConstants.keys){
+  //   debugPrint('key ==> $key');
+  // }
   runApp(
     const ProviderScope(
       child: MyAppRoutes(),
@@ -73,23 +73,23 @@ class EnvironmentConfig {
 
   ///logged in client ID which is stored as a environment variable
   static final clientId =
-  dotenv.get('my_ADMIN_DASHBOARD_CLIENTID', fallback: 'no .env');
+  dotenv.get('MY_ADMIN_DASHBOARD_CLIENTID', fallback: 'no .env');
   ///logged in client Secret which is stored as a environment variable
   static final clientSecret =
-  dotenv.get('my_ADMIN_DASHBOARD_CLIENTSECRET', fallback: 'no .env');
+  dotenv.get('MY_ADMIN_DASHBOARD_CLIENTSECRET', fallback: 'no .env');
   ///The environment variable containing the redirect URL of GitHub
   static final redirectUrl =
-  dotenv.get('my_ADMIN_DASHBOARD_REDIRECTURL', fallback: 'no .env');
+  dotenv.get('MY_ADMIN_DASHBOARD_REDIRECTURL', fallback: 'no .env');
 
   ///our firebase's API key as an environment variable
-  static final apiKey = dotenv.get('my_APIKEY', fallback: 'no .env');
+  static final apiKey = dotenv.get('MY_APIKEY', fallback: 'no .env');
   ///our android appID from the firebase console as an environment variable
-  static final appId = dotenv.get('my_APPID', fallback: 'no .env');
+  static final appId = dotenv.get('MY_APPID', fallback: 'no .env');
   ///our messagingSenderID from the firebase console as an environment variable
   static final messagingSenderId =
-  dotenv.get('my_MESSAGINGSENDERID', fallback: 'no .env');
+  dotenv.get('MY_MESSAGINGSENDERID', fallback: 'no .env');
   ///Our projectID from the firebase console as an environment variable
-  static final projectId = dotenv.get('my_PROJECTID', fallback: 'no .env');
+  static final projectId = dotenv.get('MY_PROJECTID', fallback: 'no .env');
 
 }
 

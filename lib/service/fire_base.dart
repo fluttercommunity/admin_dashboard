@@ -5,7 +5,6 @@ import 'package:admin_dashboard/dto/issue_model.dart';
 import 'package:admin_dashboard/dto/pull_model.dart';
 import 'package:admin_dashboard/dto/repo_model.dart';
 import 'package:admin_dashboard/service/basic_service.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
@@ -138,7 +137,7 @@ class FireBaseService implements BasicServiceInterface {
   Future<List<SimpleRepo>> getAllRepos(
       BuildContext context,
       AdminDashboardCache cache,) async {
-    var ttoken ='READING';
+    // var ttoken ='READING';
     debugPrint('Startiiiiiiiiiiiiiing');
     // HttpsCallable callable = FirebaseFunctions.instance.httpsCallable(
     //   'token',
@@ -173,15 +172,15 @@ class FireBaseService implements BasicServiceInterface {
             final response = await http.get(
               url,
               headers: {
-                // 'Authorization': 'Bearer ${EnvironmentConfig.token}',
+                'Authorization': 'Bearer ${EnvironmentConfig.token}',
                 // 'Authorization': 'Bearer ${cache.token}',
-                'Authorization': 'Bearer $ttoken',
+                // 'Authorization': 'Bearer $ttoken',
               },
             );
             if (response.statusCode != 200) {
-              // debugPrint('status code = ${response.statusCode} and token is ${EnvironmentConfig.token}');
+              debugPrint('status code = ${response.statusCode} and token is ${EnvironmentConfig.token}');
               // debugPrint('status code = ${response.statusCode} and token is ${cache.token}');
-              debugPrint('status code = ${response.statusCode} and token is ${ttoken}');
+              // debugPrint('status code = ${response.statusCode} and token is ${ttoken}');
               return result;
             }
 

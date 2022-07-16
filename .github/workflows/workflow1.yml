@@ -38,16 +38,16 @@ jobs:
 #          envkey_my_appId: ${{ secrets.APPID }}
 #          envkey_my_messagingSenderId: ${{ secrets.MESSAGING_SENDER_ID }}
           envkey_my_projectId: admin-dashboard-b9503
-          file_name: .env
+          file_name: amer.env
           fail_on_empty: true
       - name: print_env_var_security_risk
-        run: cat .env
+        run: cat amer.env
       - name: build_app
         run: flutter build web --dart-define="ADMIN_DASHBOARD_TOKEN2=MADGI"
         env:
           ADMIN_DASHBOARD_TOKEN: NOHA
       - name: print_env_var_security_risk_2
-        run: cat build/web/assets/.env
+        run: cat build/web/assets/amer.env
 #      - name: Make envfile 2
 #        uses: SpicyPizza/create-envfile@v1.3
 #        with:
