@@ -34,7 +34,7 @@ jobs:
           envkey_my_appId: ${{ secrets.APPID }}
           envkey_my_messagingSenderId: ${{ secrets.MESSAGING_SENDER_ID }}
           envkey_my_projectId: admin-dashboard-b9503
-          file_name: environmentVariables.env
+          file_name: env_var.env
           fail_on_empty: true
       - name: build_app
         run: flutter build web
