@@ -35,7 +35,7 @@ jobs:
           envkey_my_messagingSenderId: ${{ secrets.MESSAGING_SENDER_ID }}
           envkey_my_projectId: admin-dashboard-b9503
           file_name: env_var.env
-          fail_on_empty: true
+          fail_on_empty: false
       - name: display file
         run: cat env_var.env
       - name: build_app
