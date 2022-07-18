@@ -154,7 +154,7 @@ class FireBaseService implements BasicServiceInterface {
             );
             if (response.statusCode != 200) {
               debugPrint('status code = ${response.statusCode} '
-                  'and token is ${EnvironmentConfig.token}',);
+                  ,);
               return result;
             }
 
