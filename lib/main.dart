@@ -12,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: 'amer.env');
+  await dotenv.load(fileName: 'environmentVariables.env');
   await Firebase.initializeApp(
     name: Constants.projectName,
     options:  FirebaseOptions(
