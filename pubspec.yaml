@@ -43,5 +43,5 @@ dev_dependencies:
 flutter:
   assets:
 #    - .env
-    - amer.env
+    - environmentVariables.env
   uses-material-design: true
