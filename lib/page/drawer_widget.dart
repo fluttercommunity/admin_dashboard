@@ -1,11 +1,12 @@
 import 'package:admin_dashboard/authentication/authentication.dart';
 import 'package:admin_dashboard/dto/admin_dashboard_cache_model.dart';
 import 'package:admin_dashboard/dto/constant.dart';
-import 'package:admin_dashboard/dto/issue_model.dart';
 import 'package:admin_dashboard/dto/repo_model.dart';
+import 'package:admin_dashboard/main.dart';
 import 'package:admin_dashboard/route/routes.dart';
 import 'package:admin_dashboard/service/basic_service.dart';
 import 'package:admin_dashboard/service/fire_base.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 ///Drawer widget that is used for navigation throughout the app
@@ -71,9 +72,21 @@ class DrawerWidget extends StatelessWidget {
   ///Function that handles logging in via github's API, calls githubLogin
   Future<void> login(BuildContext context) async {
     FirebaseAuthenticationService firebaseAuthenticationService;
+    // print("Step A");
+    await Firebase.initializeApp(
+      name: Constants.projectName,
+      options:  FirebaseOptions(
+        apiKey: EnvironmentConfig.apiKey,
+        appId: EnvironmentConfig.appId,
+        messagingSenderId: EnvironmentConfig.messagingSenderId,
+        projectId: EnvironmentConfig.projectId,
+      ),
+    );
     firebaseAuthenticationService = FirebaseAuthenticationService();
+    // print("Step B");
     String? uid;
     uid = await firebaseAuthenticationService.githubLogin(context, cache);
+    // print("Step C");
     debugPrint('uid is ${uid!}');
   }
 }

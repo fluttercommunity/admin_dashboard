@@ -18,8 +18,10 @@ dependencies:
 
   build_runner:
   cupertino_icons: ^1.0.2
+#  These 2 are use for mobile only
   firebase_auth: ^3.3.19
   firebase_core: ^1.17.1
+
   flutter_riverpod: ^1.0.0
   github_sign_in: ^0.0.5-dev.4
   http: ^0.13.4

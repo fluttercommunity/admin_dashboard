@@ -1,15 +1,14 @@
 import 'dart:convert';
+
 import 'package:admin_dashboard/dto/admin_dashboard_cache_model.dart';
 import 'package:admin_dashboard/dto/constant.dart';
 import 'package:admin_dashboard/dto/issue_model.dart';
 import 'package:admin_dashboard/dto/pull_model.dart';
 import 'package:admin_dashboard/dto/repo_model.dart';
+import 'package:admin_dashboard/main.dart';
 import 'package:admin_dashboard/service/basic_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-
-
-import '../main.dart';
 
 
 
@@ -64,7 +63,6 @@ class FireBaseService implements BasicServiceInterface {
         url,
         headers: {
           'Authorization': 'Bearer ${EnvironmentConfig.token}',
-          //   'Authorization': 'Bearer ${cache.token}',
         },
       );
       if (response.statusCode != 200) {
@@ -95,7 +93,7 @@ class FireBaseService implements BasicServiceInterface {
   @override
   Future<Pull> addPull(Pull pr) async {
     const siteUrl =
-        'https://admin-dashboard-b9503-default-rtdb.firebaseio.com/activity_log'
+        '${Constants.siteUrl}'
             '/${Constants.repoNameTest}'
             '/${Constants.pulls}.json';
     try {
@@ -137,28 +135,7 @@ class FireBaseService implements BasicServiceInterface {
   Future<List<SimpleRepo>> getAllRepos(
       BuildContext context,
       AdminDashboardCache cache,) async {
-    // var ttoken ='READING';
-    debugPrint('Startiiiiiiiiiiiiiing');
-    // HttpsCallable callable = FirebaseFunctions.instance.httpsCallable(
-    //   'token',
-    //   options: HttpsCallableOptions(
-    //     timeout: const Duration(seconds: 5),
-    //   ),
-    // );
-    // try {
-    //   final result = await callable();
-    //   print('result.data is ${result.data}');
-    //   ttoken = result.data as String;
-    // } catch (e) {
-    //   print(e.toString());
-    // }
-    // final functions = FirebaseFunctions.instance;
-    // final pluginConstants = functions.pluginConstants;
-    // for (var key in pluginConstants.keys){
-    //   debugPrint('key ==> $key');
-    // }
-
-
+    // debugPrint('Startiiiiiiiiiiiiiing');
 
     final result = <SimpleRepo>[];
     var page =0;
@@ -173,14 +150,11 @@ class FireBaseService implements BasicServiceInterface {
               url,
               headers: {
                 'Authorization': 'Bearer ${EnvironmentConfig.token}',
-                // 'Authorization': 'Bearer ${cache.token}',
-                // 'Authorization': 'Bearer $ttoken',
               },
             );
             if (response.statusCode != 200) {
-              debugPrint('status code = ${response.statusCode} and token is ${EnvironmentConfig.token}');
-              // debugPrint('status code = ${response.statusCode} and token is ${cache.token}');
-              // debugPrint('status code = ${response.statusCode} and token is ${ttoken}');
+              debugPrint('status code = ${response.statusCode} '
+                  'and token is ${EnvironmentConfig.token}',);
               return result;
             }
 

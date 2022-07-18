@@ -28,7 +28,11 @@ class Constants {
   ///Title for the repo page
   static const String repoTitle = 'Repository page';
   ///Firebase Project name
-  static const String projectName = 'admin-dashboard';
+  // static const String projectName = 'admin-dashboard';
+  static const String projectName = 'MyAdmin2';
   ///Welcome page title
   static const String welcomePageTitle = 'Flutter Admin Dashboard';
+  ///Activity log URL
+  static const String siteUrl = 'https://admin-dashboard-b9503-default-rtdb.firebaseio.com/activity_log';
+
 }
