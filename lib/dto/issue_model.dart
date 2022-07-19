@@ -6,7 +6,6 @@ part 'issue_model.g.dart';
 
 ///Model of github issues
 class Issue {
-  //final List<Label> labels;
 
   ///Model of github issues
   Issue({
@@ -18,7 +17,6 @@ class Issue {
     required this.closedBy,
     required this.commentsNumber,
     required this.repository,
-    //,this.labels
   });
   ///Conversion of JSON into issue object
   factory Issue.fromJson(Map<String, dynamic> json) => _$IssueFromJson(json);
