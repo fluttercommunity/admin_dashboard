@@ -13,7 +13,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: 'env_var.env');
-  await Firebase.initializeApp(
+  // await Firebase.initializeApp(
+  //   name: Constants.projectName,
+  //   options:  FirebaseOptions(
+  //     apiKey: EnvironmentConfig.apiKey,
+  //     appId: EnvironmentConfig.appId,
+  //     messagingSenderId: EnvironmentConfig.messagingSenderId,
+  //     projectId: EnvironmentConfig.projectId,
+  //   ),
+  // );
+
+  final firebaseApp = await Firebase.initializeApp(
     name: Constants.projectName,
     options:  FirebaseOptions(
       apiKey: EnvironmentConfig.apiKey,
@@ -25,8 +35,8 @@ Future<void> main() async {
 
 
   runApp(
-    const ProviderScope(
-      child: MyAppRoutes(),
+     ProviderScope(
+      child: MyAppRoutes( firebaseApp: firebaseApp,),
     ),
   );
 }
@@ -34,19 +44,24 @@ Future<void> main() async {
 /// MyAppRoutes is the default page run at start up, it handles navigation
 /// to the homepage and calls the class generateRoute when navigating
 class MyAppRoutes extends ConsumerWidget {
-  ///Key
-  const MyAppRoutes({Key? key}) : super(key: key);
+  ///MyAppRoutes constructor
+  const MyAppRoutes( {required this.firebaseApp,   Key? key}) :
+         super(key: key);
+
+  ///instance of firebaseApp
+  final FirebaseApp firebaseApp;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cache = ref.read(cacheProvider);
-    final fire = ref.read(fireBaseService);
+    //final fire = ref.read(fireBaseService);
     return MaterialApp(
       onGenerateTitle: (context) => Constants.welcomePageTitle,
       initialRoute: RouteGenerator.welcomePage,
       onGenerateRoute: //RouteGenerator.generateRoute,
           (settings) {
-                  return RouteGenerator.generateRoute(settings, cache, fire);
+                  return RouteGenerator.generateRoute(settings, cache,
+                      firebaseApp,);
                 },
       debugShowCheckedModeBanner: false,
     );

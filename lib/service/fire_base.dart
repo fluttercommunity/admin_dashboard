@@ -7,6 +7,7 @@ import 'package:admin_dashboard/dto/pull_model.dart';
 import 'package:admin_dashboard/dto/repo_model.dart';
 import 'package:admin_dashboard/main.dart';
 import 'package:admin_dashboard/service/basic_service.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,6 +16,11 @@ import 'package:http/http.dart' as http;
 ///implements the methods that Firebase as a middleware
 ///will provide for GitHub
 class FireBaseService implements BasicServiceInterface {
+  ///FirebaseService constructor that takes firebaseApp as a parameter
+  FireBaseService(this.firebaseApp);
+  ///Instance of firebaseApp
+  FirebaseApp firebaseApp;
+
   @override
   Future<Issue> addIssue(Issue issue) async {
     const siteUrl =

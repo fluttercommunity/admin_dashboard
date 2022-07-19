@@ -2,35 +2,42 @@ import 'package:admin_dashboard/dto/admin_dashboard_cache_model.dart';
 import 'package:admin_dashboard/dto/constant.dart';
 import 'package:admin_dashboard/dto/repo_model.dart';
 import 'package:admin_dashboard/page/drawer_widget.dart';
-import 'package:admin_dashboard/service/basic_service.dart';
 import 'package:admin_dashboard/service/fire_base.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 
-///state of the login page
+///state of the repo page
 class RepoPage extends StatefulWidget {
-
-  ///login page
+  ///repo page constructor
   const RepoPage({
     Key? key,
     required this.cache,
-    required this.fire,
+    //required this.fire,
+    required this.firebaseApp,
   }) : super(key: key);
+
+  ///Instance of firebaseApp
+  final FirebaseApp firebaseApp;
 
   ///cache where the logged in user's ID is stored
   final AdminDashboardCache cache;
   ///instance to handle firebase services
-  final BasicServiceInterface fire;
+  //final BasicServiceInterface fire;
 
   @override
-  State<RepoPage> createState() => _RepoPageState(cache, fire);
+  State<RepoPage> createState() => _RepoPageState(cache, //fire,
+      firebaseApp,);
 }
 
 class _RepoPageState extends State<RepoPage> {
-  _RepoPageState(this.cache, this.fire);
+  _RepoPageState(this.cache, //this.fire,
+      this.firebaseApp,);
   late Future<List<SimpleRepo>> myTitleList;
   AdminDashboardCache cache;
-  BasicServiceInterface fire;
+  //BasicServiceInterface fire;
+  FirebaseApp firebaseApp;
+
   @override
   void initState() {
     super.initState();
@@ -40,7 +47,8 @@ class _RepoPageState extends State<RepoPage> {
   Widget build(BuildContext context) {
     printRepos(context);
     return  Scaffold(
-      drawer: DrawerWidget(cache, fire),
+      drawer: DrawerWidget(cache, //fire,
+          firebaseApp,),
       appBar: AppBar(
         backgroundColor: Colors.blue,
         title: const Text(Constants.repoTitle),
@@ -71,7 +79,7 @@ class _RepoPageState extends State<RepoPage> {
       return cache.myTitleList;
     }
     FireBaseService fireBaseService;
-    fireBaseService = FireBaseService();
+    fireBaseService = FireBaseService(firebaseApp);
      final list = await fireBaseService.getAllRepos(
         context,
         cache,

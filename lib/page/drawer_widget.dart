@@ -2,9 +2,7 @@ import 'package:admin_dashboard/authentication/authentication.dart';
 import 'package:admin_dashboard/dto/admin_dashboard_cache_model.dart';
 import 'package:admin_dashboard/dto/constant.dart';
 import 'package:admin_dashboard/dto/repo_model.dart';
-import 'package:admin_dashboard/main.dart';
 import 'package:admin_dashboard/route/routes.dart';
-import 'package:admin_dashboard/service/basic_service.dart';
 import 'package:admin_dashboard/service/fire_base.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +10,16 @@ import 'package:flutter/material.dart';
 ///Drawer widget that is used for navigation throughout the app
 class DrawerWidget extends StatelessWidget {
   ///Constructor for the drawer widget
-  const DrawerWidget(this.cache, this.fire, {Key? key}) : super(key: key);
+
+  const DrawerWidget(this.cache,// this.fire,
+      this.firebaseApp, {Key? key,}) : super(key: key);
+  ///Instance of firebaseApp
+  final FirebaseApp firebaseApp;
 
   ///Our cache that is used throughout the app
  final AdminDashboardCache cache;
   ///
- final BasicServiceInterface fire;
+ //final BasicServiceInterface fire;
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +63,7 @@ class DrawerWidget extends StatelessWidget {
   ///Prints a list of all repos in a specific organization
   Future<List<SimpleRepo>> printRepos(BuildContext context) async {
     FireBaseService fireBaseService;
-    fireBaseService = FireBaseService();
+    fireBaseService = FireBaseService(firebaseApp);
 
     final list = await fireBaseService.getAllRepos(
         context,
@@ -73,16 +75,7 @@ class DrawerWidget extends StatelessWidget {
   Future<void> login(BuildContext context) async {
     FirebaseAuthenticationService firebaseAuthenticationService;
     // print("Step A");
-    await Firebase.initializeApp(
-      name: Constants.projectName,
-      options:  FirebaseOptions(
-        apiKey: EnvironmentConfig.apiKey,
-        appId: EnvironmentConfig.appId,
-        messagingSenderId: EnvironmentConfig.messagingSenderId,
-        projectId: EnvironmentConfig.projectId,
-      ),
-    );
-    firebaseAuthenticationService = FirebaseAuthenticationService();
+    firebaseAuthenticationService = FirebaseAuthenticationService(firebaseApp);
     // print("Step B");
     String? uid;
     uid = await firebaseAuthenticationService.githubLogin(context, cache);
