@@ -23,28 +23,12 @@ class DrawerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-        child: Material(
-            color: Colors.blue,
-            child: ListView(
-              children: <Widget>[
-                const SizedBox(height: 48),
-                buildMenuItem(
-                  text: Constants.login,
-                  icon: Icons.add,
-                  onClicked: () =>  {login(context)},
-                ),
-                //
-                buildMenuItem(text: Constants.printRepos,
-                    icon: Icons.add,
-                  onClicked: () =>{
-                  Navigator.of(context).pushNamed(RouteGenerator.repoPage)
-                  },
-                ),
-              ],
-            ),
-        ),
-    );
+    return buildLoggedIn(context);
+    // if(this.cache.loggedIn == false)
+    //   return buildNotLoggedIn(context);
+    // else
+    //   return buildLoggedIn(context);
+
   }
   ///Build for items in the drawer widget
   Widget buildMenuItem({
@@ -77,9 +61,74 @@ class DrawerWidget extends StatelessWidget {
     // print("Step A");
     firebaseAuthenticationService = FirebaseAuthenticationService(firebaseApp);
     // print("Step B");
-    String? uid;
-    uid = await firebaseAuthenticationService.githubLogin(context, cache);
+    // String? uid;
+    // uid = await firebaseAuthenticationService.githubLogin(context, cache);
     // print("Step C");
-    debugPrint('uid is ${uid!}');
+    // debugPrint('uid is ${uid!}');
+  }
+
+  Widget buildNotLoggedIn(BuildContext context) {
+    return Drawer(
+      child: Material(
+        color: Colors.deepPurple,
+        child: ListView(
+          children: <Widget>[
+            const SizedBox(height: 48),
+            buildMenuItem(
+              text: Constants.login,
+              icon: Icons.play_arrow,
+              onClicked: () =>  {login(context)},
+            ),
+            //
+            buildMenuItem(text: Constants.printRepos,
+              icon: Icons.play_arrow,
+              onClicked: () =>{
+                Navigator.of(context).pushNamed(RouteGenerator.repoPage)
+              },
+            ),
+            buildMenuItem(text: 'placeholder',
+                icon: Icons.abc,
+                onClicked: () => {
+                  //Navigator.of(context).pushNamed(RouteGenerator.blankPage)
+                }
+            ),
+          ],
+        ),
+      ),
+    );
+
+  }
+
+  Widget buildLoggedIn(BuildContext context) {
+    return Drawer(
+      child: Material(
+        color: Colors.deepPurple,
+        child: ListView(
+          children: <Widget>[
+            const SizedBox(height: 48),
+            //
+            buildMenuItem(text: Constants.printRepos,
+              icon: Icons.play_arrow,
+              onClicked: () =>{
+                Navigator.of(context).pushNamed(RouteGenerator.repoPage)
+              },
+            ),
+            buildMenuItem(
+              text: Constants.logout,
+              icon: Icons.play_arrow,
+              onClicked: () =>  {//login(context)
+              },
+            ),
+            buildMenuItem(text: 'placeholder',
+                icon: Icons.abc,
+                onClicked: () => {
+                  //Navigator.of(context).pushNamed(RouteGenerator.blankPage)
+                }
+            ),
+          ],
+        ),
+      ),
+    );
+
   }
 }

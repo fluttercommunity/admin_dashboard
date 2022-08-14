@@ -2,6 +2,7 @@ import 'package:admin_dashboard/dto/admin_dashboard_cache_model.dart';
 import 'package:admin_dashboard/dto/constant.dart';
 import 'package:admin_dashboard/dto/repo_model.dart';
 import 'package:admin_dashboard/page/drawer_widget.dart';
+import 'package:admin_dashboard/page/repo_list_element.dart';
 import 'package:admin_dashboard/service/fire_base.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class _RepoPageState extends State<RepoPage> {
       drawer: DrawerWidget(cache, //fire,
           firebaseApp,),
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.deepPurple,
         title: const Text(Constants.repoTitle),
         ),
       body: Container(
@@ -90,9 +91,11 @@ class _RepoPageState extends State<RepoPage> {
 
   List<Widget> _buildList(List<SimpleRepo> list) {
     list.sort();
+    int index = 0;
     final result = <Widget>[];
     for (final simpleRepo in list) {
-      final element = SimpleRepoElement(simpleRepo, cache);
+      final element = SimpleRepoElement(index,simpleRepo, cache);
+      index++;
       result.add(element);
     }
     return result;
@@ -102,22 +105,20 @@ class _RepoPageState extends State<RepoPage> {
 ///Our repository object that is used in the repository page
 class SimpleRepoElement extends StatelessWidget {
   ///SimpleRepo constructor
-  const SimpleRepoElement(this.simpleRepo, this.cache, {Key? key})
+  const SimpleRepoElement(this.index,this.simpleRepo, this.cache, {Key? key})
   : super(key: key);
   ///Our cache that is used throughout the application, the list of retrieved
   ///repositories gets stored in the cache
   final AdminDashboardCache cache;
   ///SimpleRepo object that is used in the repository page
   final SimpleRepo simpleRepo;
+
+  final int index;
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return ElevatedButton(
-      onPressed: () {  },
-      style: ElevatedButton.styleFrom(
-          primary: Colors.blue, // background (button) color
-        onPrimary: Colors.black,// background (text) color
-        maximumSize: Size(width*0.7, 80),
-     ), child: Text(' ${simpleRepo.name}'),);
+    final element = RepoListElement(simpleRepo, width, index);
+    return element.build(context, cache);
   }
 }

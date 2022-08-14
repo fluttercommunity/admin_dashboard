@@ -6,7 +6,12 @@ class AdminDashboardCache {
   String? uid = '';
   ///Token used for authentication
   String token = EnvironmentConfig.token;
-
+  late int index;
   ///List of repositories in the repo screen
   List<SimpleRepo> myTitleList = [];
+  
+  SimpleRepo simpleRepo =  SimpleRepo(name: '');
+  bool isWeb = false;
+
+  bool loggedIn = false;
 }

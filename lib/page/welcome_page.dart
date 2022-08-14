@@ -39,6 +39,7 @@ class _WelcomePageState extends State<WelcomePage> {
         firebaseApp,),
     appBar:  AppBar(
       title: const Text(Constants.welcomePageTitle),
+      backgroundColor: Colors.deepPurpleAccent,
     ),
   );
 

@@ -25,6 +25,7 @@ class Constants {
   static const String printRepos = 'Print a list of all repositories';
   ///Text for the login page from the drawer
   static const String login = 'login';
+  static const String logout = 'logout';
   ///Title for the repo page
   static const String repoTitle = 'Repository page';
   ///Firebase Project name
@@ -34,5 +35,10 @@ class Constants {
   static const String welcomePageTitle = 'Flutter Admin Dashboard';
   ///Activity log URL
   static const String siteUrl = 'https://admin-dashboard-b9503-default-rtdb.firebaseio.com/activity_log';
-
+  ///Flutter community organization's name as a title
+  static const String flcTitle = 'Flutter Community';
+  ///Status of bottomSheet widget
+  static const String status = 'Status: RED';
+  ///Updated at for bottom sheet widget
+  static const String update = 'Last Updated At:  ';
 }
