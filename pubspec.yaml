@@ -44,7 +44,5 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-    - images/pp.jpg
-#    - .env
     - env_var.env
   uses-material-design: true
