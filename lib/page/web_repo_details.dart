@@ -107,7 +107,8 @@ class _WebSummaryDashboard extends State<WebSummaryDashboard>{
         ),
         appBar: AppBar(
           backgroundColor: Colors.deepPurpleAccent,
-          title: Text(cache.simpleRepo.name),
+          title: Text(
+              cache.simpleRepo.name.replaceAll(RegExp('/fluttercommunity/'),'')),
         ),
         body:
         FutureBuilder<DashboardParameterList>(

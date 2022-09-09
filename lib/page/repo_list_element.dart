@@ -31,6 +31,7 @@ class RepoListElement{
         primary: backgroundColor,
         onPrimary: Colors.black,
         maximumSize: Size(width*0.7, 80),
-      ), child: Text(' ${simpleRepo.name}'),);
+      ), child: Text(
+        ' ${simpleRepo.name.replaceAll(RegExp('/fluttercommunity/'),'')}',),);
   }
 }
