@@ -8,5 +8,6 @@ abstract class AuthenticationService {
   ///Login using an email and password
   Future<String?> emailLogin(String email, String password);
   ///Authenticate login using github's interface
-  Future<UserCredential> githubLogin(BuildContext context, AdminDashboardCache cache);
+  Future<UserCredential> githubLogin(BuildContext context,
+      AdminDashboardCache cache,);
 }

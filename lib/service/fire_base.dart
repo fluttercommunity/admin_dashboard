@@ -25,24 +25,24 @@ class FireBaseService implements BasicServiceInterface {
   Future<Issue> addIssue(Issue issue) async {
     const siteUrl =
         '${Constants.repoLogLink}'
-              '/${Constants.repoNameTest}'
-               '/${Constants.issues}.json';
+        '/${Constants.repoNameTest}'
+        '/${Constants.issues}.json';
 
     try {
       final urlChat = Uri.parse(siteUrl);
       final issue = Issue(
-          issueID: 250,
-          state: 'closed',
-          title: 'Test Issue 25',
-          loggedAt: DateTime.now(),
-          closedAt: DateTime.now(),
-          closedBy: 'Amer',
-          commentsNumber: 4,
-          repository: Constants.repoNameTest,
+        issueID: 250,
+        state: 'closed',
+        title: 'Test Issue 25',
+        loggedAt: DateTime.now(),
+        closedAt: DateTime.now(),
+        closedBy: 'Amer',
+        commentsNumber: 4,
+        repository: Constants.repoNameTest,
       );
       debugPrint(issue.toJson().toString());
       final response1 = await http.post(urlChat,
-          body: json.encode(issue.toJson()),);
+        body: json.encode(issue.toJson()),);
       debugPrint(response1.statusCode.toString());
       return issue;
     } catch (error) {
@@ -58,10 +58,10 @@ class FireBaseService implements BasicServiceInterface {
 
   @override
   Future<List<Issue>> getAllRepoIssues(
-    String repoName,
-    BuildContext context,
-    AdminDashboardCache cache,
-  ) async {
+      String repoName,
+      BuildContext context,
+      AdminDashboardCache cache,
+      ) async {
     final result = <Issue>[];
     final url = Uri.parse('https://api.github.com$repoName');
     try {
@@ -100,8 +100,8 @@ class FireBaseService implements BasicServiceInterface {
   Future<Pull> addPull(Pull pr) async {
     const siteUrl =
         '${Constants.siteUrl}'
-            '/${Constants.repoNameTest}'
-            '/${Constants.pulls}.json';
+        '/${Constants.repoNameTest}'
+        '/${Constants.pulls}.json';
     try {
       final urlChat = Uri.parse(siteUrl);
       Pull pull;
@@ -117,7 +117,7 @@ class FireBaseService implements BasicServiceInterface {
       );
       debugPrint(pull.toJson().toString());
       final response2 =
-          await http.post(urlChat, body: json.encode(pull.toJson()));
+      await http.post(urlChat, body: json.encode(pull.toJson()));
       debugPrint(response2.statusCode.toString());
       return pull;
     } catch (error) {
@@ -141,57 +141,56 @@ class FireBaseService implements BasicServiceInterface {
   Future<List<SimpleRepo>> getAllRepos(
       BuildContext context,
       AdminDashboardCache cache,) async {
-    // debugPrint('Startiiiiiiiiiiiiiing');
-
     final result = <SimpleRepo>[];
     var page =0;
     while(true) {
-        page++;
-        final url = Uri.parse('${Constants.gitApi}/'
-            '${Constants.orgs}/'
-            '${Constants.flc}/'
-            '${Constants.repos}?page=$page',);
-        try {
-            final response = await http.get(
-              url,
-              headers: {
-                'Authorization': 'Bearer ${EnvironmentConfig.token}',
-              },
-            );
-            if (response.statusCode != 200) {
-              debugPrint('status code = ${response.statusCode} '
-                  ,);
-              return result;
-            }
+      page++;
+      final url = Uri.parse('${Constants.gitApi}/'
+          '${Constants.orgs}/'
+          '${Constants.flc}/'
+          '${Constants.repos}?page=$page',);
+      try {
+        final response = await http.get(
+          url,
+          headers: {
+            'Authorization': 'Bearer ${EnvironmentConfig.token}',
+          },
+        );
+        if (response.statusCode != 200) {
+          debugPrint('status code = ${response.statusCode} '
+            ,);
+          return result;
+        }
 
-            final body = response.body;
-            if (body == 'null') {
-              return result;
-            }
-            final repos = json.decode(response.body);
-            List<dynamic> repoList;
-            repoList = repos as List;
-            if(repoList.isEmpty){
-              break;//breaks the while loop
-            }
-            for (final element in repoList) {
-              Map<String, Object?> repo;
-              repo = element as Map<String, Object?>;
-              final name
-              = (repo['name'] == null) ? '' : repo['name'].toString();
-              debugPrint('name=$name');
-              debugPrint("url=${repo['url'] ?? "url"}");
+        final body = response.body;
+        if (body == 'null') {
+          return result;
+        }
+        final repos = json.decode(response.body);
+        List<dynamic> repoList;
+        repoList = repos as List;
+        if(repoList.isEmpty){
+          break;//breaks the while loop
+        }
+        for (final element in repoList) {
+          Map<String, Object?> repo;
+          repo = element as Map<String, Object?>;
+          final name
+          = (repo['name'] == null) ? '' : repo['name'].toString();
+          debugPrint('name=$name');
+          debugPrint("url=${repo['url'] ?? "url"}");
 
-              if (name.isNotEmpty) {
-                final repoObj = SimpleRepo(name: name);
-                result.add(repoObj);
-              }
-            }
-          } catch (error) {
-            rethrow;
+          if (name.isNotEmpty) {
+            final repoObj = SimpleRepo(
+                name: Constants.fluttercommunityPath + name,);
+            result.add(repoObj);
           }
         }
-        return result;
+      } catch (error) {
+        rethrow;
+      }
+    }
+    return result;
 
   }
 }

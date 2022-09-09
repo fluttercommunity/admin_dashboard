@@ -1,4 +1,3 @@
-import 'package:admin_dashboard/dto/admin_dashboard_cache_model.dart';
 import 'package:admin_dashboard/dto/constant.dart';
 import 'package:admin_dashboard/page/drawer_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,7 +8,6 @@ class WelcomePage extends StatefulWidget {
   ///welcome page constructor
   const WelcomePage({
     Key? key,
-    required this.cache,
     //required this.fire,
     required this.firebaseApp,
   }) : super(key: key);
@@ -17,26 +15,25 @@ class WelcomePage extends StatefulWidget {
   final FirebaseApp firebaseApp;
 
   ///cache where the logged in user's ID is stored
-  final AdminDashboardCache cache;
   ///instance to handle firebase services
   //final BasicServiceInterface fire;
 
   @override
-  State<WelcomePage> createState() => _WelcomePageState(cache, //fire,
-      firebaseApp,);
+  State<WelcomePage> createState() => _WelcomePageState(//cache, //fire,
+    firebaseApp,);
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  _WelcomePageState(this.cache, //this.fire,
+  _WelcomePageState(//this.cache, //this.fire,
       this.firebaseApp,);
   FirebaseApp firebaseApp;
-  AdminDashboardCache cache;
+  //AdminDashboardCache cache;
   //BasicServiceInterface fire;
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    drawer: DrawerWidget(cache, //fire,
-        firebaseApp,),
+    drawer: DrawerWidget(//cache, //fire,
+      firebaseApp,),
     appBar:  AppBar(
       title: const Text(Constants.welcomePageTitle),
       backgroundColor: Colors.deepPurpleAccent,

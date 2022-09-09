@@ -1,78 +1,83 @@
-
+import 'package:admin_dashboard/dto/admin_dashboard_cache_model.dart';
 import 'package:admin_dashboard/dto/constant.dart';
-import 'package:admin_dashboard/service/issue_service.dart';
-import 'package:admin_dashboard/service/pull_request_service.dart';
+import 'package:admin_dashboard/dto/repo_model.dart';
+import 'package:admin_dashboard/page/drawer_widget.dart';
+import 'package:admin_dashboard/provider/provider_list.dart';
+import 'package:admin_dashboard/route/routes.dart';
+import 'package:admin_dashboard/service/dashboard_services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../dto/admin_dashboard_cache_model.dart';
-import '../dto/repo_model.dart';
-import '../provider/provider_list.dart';
-import '../service/dashboard_services.dart';
-import 'drawer_widget.dart';
-
-
+///Repo page that is displayed on tablets/web browsers
 class WideRepoPage extends ConsumerWidget {
-  final AdminDashboardCache cache;
+
+  ///Constructor
+  const WideRepoPage(this.firebaseApp, this.simpleRepo, this.myWidth,
+      this.myHeight,);
 
   ///instance of firebaseApp
   final FirebaseApp firebaseApp;
-
+  ///Instance of simple repo
   final SimpleRepo simpleRepo;
+  ///Width of screen
   final double myWidth;
+  ///Height of screen
   final double myHeight;
-
-
-  WideRepoPage(this.cache, this.firebaseApp, this.simpleRepo, this.myWidth,
-      this.myHeight);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    DashboardServiceInterface dashboardProvider = ref.read(myDashboardProvider);
-    return WebSummaryDashboard(cache, firebaseApp,
+    final cache = ref.read(cacheProvider);
+    final dashboardProvider = ref.read(myDashboardProvider);
+    return WebSummaryDashboard( cache, firebaseApp,
         dashboardProvider,
-        this.myWidth,
-        this.myHeight);
+        myWidth,
+        myHeight,);
 
   }
 }
-
+///The repo dashboard for browsers/tablet devices
 class WebSummaryDashboard extends StatefulWidget{
-  AdminDashboardCache cache;
-  FirebaseApp firebaseApp;
-  DashboardServiceInterface dashboardProvider;
-
-  final double myWidth;
-  final double myHeight;
-  WebSummaryDashboard(this.cache, this.firebaseApp,
+  ///Constructor
+  const WebSummaryDashboard(this.cache, this.firebaseApp,
       this.dashboardProvider,
       this.myWidth,
-      this.myHeight);
+      this.myHeight,);
+  ///Instance of admin dashboard cache
+  final AdminDashboardCache cache;
+  ///Instance of firebase app
+  final FirebaseApp firebaseApp;
+  ///Instance of dashboard provider
+  final DashboardServiceInterface dashboardProvider;
+  ///Screen's width
+  final double myWidth;
+  ///Screen's height
+  final double myHeight;
 
   @override
   State<StatefulWidget> createState() {
-    return _WebSummaryDashboard(this.cache, this.firebaseApp,
-        this.dashboardProvider,
-        this.myWidth,
-        this.myHeight);
+    return _WebSummaryDashboard(cache, firebaseApp,
+        dashboardProvider,
+        myWidth,
+        myHeight,);
   }
 
 }
 
 class _WebSummaryDashboard extends State<WebSummaryDashboard>{
+  _WebSummaryDashboard(this.cache, this.firebaseApp,
+      this.dashboardProvider,
+      this.myWidth,
+      this.myHeight,);
+
   AdminDashboardCache cache;
   FirebaseApp firebaseApp;
   DashboardServiceInterface dashboardProvider;
 
   final double myWidth;
   final double myHeight;
-  _WebSummaryDashboard(this.cache, this.firebaseApp,
-      this.dashboardProvider,
-      this.myWidth,
-      this.myHeight);
+
 
   late Future<DashboardParameterList> params;
 
@@ -86,11 +91,11 @@ class _WebSummaryDashboard extends State<WebSummaryDashboard>{
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery
+    final width = MediaQuery
         .of(context)
         .size
         .width;
-    double height = MediaQuery
+    final height = MediaQuery
         .of(context)
         .size
         .height;
@@ -98,7 +103,6 @@ class _WebSummaryDashboard extends State<WebSummaryDashboard>{
     return Scaffold(
         backgroundColor: Colors.grey,
         drawer: DrawerWidget(
-          cache,
           firebaseApp,
         ),
         appBar: AppBar(
@@ -107,234 +111,248 @@ class _WebSummaryDashboard extends State<WebSummaryDashboard>{
         ),
         body:
         FutureBuilder<DashboardParameterList>(
-            future: params,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasData) {
-                  DashboardParameterList dashboardParams = snapshot.data!;
-                  return Column(children: [
-                    firstRow(context, width, height, dashboardParams),
-                    secondRow(context, width, height, dashboardParams),
+          future: params,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                final dashboardParams = snapshot.data!;
+                return Column(children: [
+                  firstRow(context, width, height, dashboardParams),
+                  secondRow(context, width, height, dashboardParams),
 
-                  ],
-                  );
+                ],
+                );
 
-                } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
-                }
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
               }
-              return const CircularProgressIndicator();
-            },
+            }
+            return const CircularProgressIndicator();
+          },
         )
 
         ,
         bottomSheet: buildBottomSheet(context)
+    ,);
+  }
+
+  Widget buildBottomSheet(BuildContext context) {
+    final dateToday = DateTime.now();
+    final date = dateToday.toString().substring(0,10);
+    return Container(
+        constraints: const BoxConstraints(
+          maxHeight: 30,
+          maxWidth: 5000,
+          minWidth: 150,
+          minHeight: 20,
+        ),
+        child: BottomAppBar(
+            color: Colors.black12,
+            child: Row(
+              children: <Widget>[
+                const Spacer(),
+                Container(
+                  alignment: Alignment.center,
+                  child: const Text(Constants.flcTitle),
+                ),
+                const Spacer(),
+                Container(
+                  alignment: Alignment.center,
+                  child: Text( '${Constants.update}$date'),
+                ),
+                const Spacer(),
+                Container(
+                  alignment: Alignment.center,
+                  child: const Text(Constants.status,
+                      style: TextStyle(
+                          backgroundColor: Colors.red,),),
+                ),
+                const Spacer(),
+              ],
+            )
+        ,)
+    ,);
+  }
+
+  Widget firstColumn(BuildContext context,
+      DashboardParameterList dashboardParams,) {
+
+    return Expanded( child:
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      textBaseline: TextBaseline.alphabetic,
+      children: [
+        GestureDetector(
+        onTap: () => {
+         Navigator.of(context).pushReplacementNamed(
+             RouteGenerator.issueDetailPage,)
+         },
+         child:
+         Container(
+            margin: const EdgeInsets.only(
+                bottom: 75, left: 120,
+                right: 50, top: 100,),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(18)
+            ,),
+            padding: const EdgeInsets.all(15),
+            child: Text(dashboardParams.issueSummary.issuesOldTitle),),
+        ),
+        Container(
+            margin: const EdgeInsets.only(bottom: 75, left: 120),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(18)
+            ,),
+            padding: const EdgeInsets.all(15),
+            child: Text(dashboardParams.issueSummary.issuesHighActivity),),
+        Container(
+            margin: const EdgeInsets.only(bottom: 75, left: 120),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(18)
+            ,),
+            padding: const EdgeInsets.all(15),
+            child: Text(dashboardParams.issueSummary.issuesLowActivity),),
+        Container(
+            margin: const EdgeInsets.only(left: 120),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(18)
+            ,),
+            padding: const EdgeInsets.all(15),
+            child: Text(dashboardParams.issueSummary.issuesLabeled),),
+      ],
+    ),
     );
   }
 
-Widget buildBottomSheet(BuildContext context) {
-  final dateToday = DateTime.now();
-  final date = dateToday.toString().substring(0,10);
-  return Container(
-      constraints: const BoxConstraints(
-        maxHeight: 30,
-        maxWidth: 5000,
-        minWidth: 150,
-        minHeight: 20,
-      ),
-      child: BottomAppBar(
-          color: Colors.black12,
-          child: Row(
-            children: <Widget>[
-              const Spacer(),
-              Container(
-                alignment: Alignment.center,
-                child: Text(Constants.flcTitle),
-              ),
-              const Spacer(),
-              Container(
-                alignment: Alignment.center,
-                child: Text( Constants.update + '$date'),
-              ),
-              const Spacer(),
-              Container(
-                alignment: Alignment.center,
-                child: const Text(Constants.status,
-                    style: TextStyle(
-                    backgroundColor: Colors.red)),
-              ),
-              const Spacer(),
-            ],
+  Widget secondColumn(BuildContext context) {
+    return Expanded(
+      child:
+      Column(
+        children: [
+          Container(
+            alignment: Alignment.topCenter,
+            height: myHeight/2,
+            width: myWidth/2,
+            margin: const EdgeInsets.only(top:125),
+            child: MyLineChart(cache: cache,) ,
           )
-      )
-  );
-}
-
-Widget firstColumn(BuildContext context, DashboardParameterList dashboardParams) {
-
-  return Expanded( child:
-   Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    textBaseline: TextBaseline.alphabetic,
-    children: [
-      Container(
-          margin: const EdgeInsets.only(
-              bottom: 75, left: 120,
-              right: 50, top: 100),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(18)
-          ),
-          padding: EdgeInsets.all(15),
-          child: Text(dashboardParams.issueSummary.issuesOldTitle)),
-      Container(
-          margin: const EdgeInsets.only(bottom: 75, left: 120),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(18)
-          ),
-          padding: EdgeInsets.all(15),
-          child: Text(dashboardParams.issueSummary.issuesHighActivity)),
-      Container(
-          margin: const EdgeInsets.only(bottom: 75, left: 120),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(18)
-          ),
-          padding: EdgeInsets.all(15),
-          child: Text(dashboardParams.issueSummary.issuesLowActivity)),
-      Container(
-          margin: const EdgeInsets.only(left: 120),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(18)
-          ),
-          padding: EdgeInsets.all(15),
-          child: Text(dashboardParams.issueSummary.issuesLabeled)),
-    ],
-  ),
-  );
-}
-
-Widget secondColumn(BuildContext context) {
-  return Expanded(
-    child:
-    Column(
-      children: [
-        Container(
-          alignment: Alignment.topCenter,
-          height: this.myHeight/2,
-          width: this.myWidth/2,
-          margin: EdgeInsets.only(top:125),
-          // child: Image.asset("images/pp.jpg"),
-          child: MyLineChart(cache: cache,) ,
-        )
-      ],
-    ),
-  );
-}
-
-Widget thirdColumn(BuildContext context,
-    DashboardParameterList dashboardParams) {
-  return Expanded(
-    child:
-    Column(
-      children: [
-        Container(
-            margin: const EdgeInsets.only(bottom: 75, top: 100, right: 120),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(18)
-            ),
-            padding: EdgeInsets.all(15),
-            child: Text(dashboardParams.pullRequestSummary.pullsOldTitle)),
-        Container(
-            margin: const EdgeInsets.only(bottom: 75, right: 120),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(18)
-            ),
-            padding: EdgeInsets.all(15),
-            child: Text(dashboardParams.pullRequestSummary.pullsHighActivity)),
-        Container(
-            margin: const EdgeInsets.only(bottom: 75, right: 120),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(18)
-            ),
-            padding: EdgeInsets.all(15),
-            child: Text(dashboardParams.pullRequestSummary.pullsLowActivity)),
-        Container(
-            margin: const EdgeInsets.only( right: 120),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(18)
-            ),
-            padding: EdgeInsets.all(15),
-            child: Text(dashboardParams.pullRequestSummary.pullsLabeled)),
-      ],
-    ),
-  );
-}
-
-Widget firstRow(BuildContext context, double width, double height,
-    DashboardParameterList dashboardParams) {
-
-  return Expanded(child: Container(
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(18)
+        ],
       ),
-      height: double.maxFinite,
-      child:Container(child:
-      Row(children: [
-        Spacer(),
-        Container(
-          child:
-         Text( dashboardParams.issueSummary.totalIssueTitle +
-             dashboardParams.issueSummary.totalIssue),
-          width: width/4,),
-        Container(
-          child:
-          Text( dashboardParams.issueSummary.dormantIssueTitle +
-            dashboardParams.issueSummary.totalDormantIssue),
-          width: width/4,),
-        Container(
-          child:
-          Text( dashboardParams.pullRequestSummary.dormantPullTitle +
-             dashboardParams.pullRequestSummary.totalClosedPull)
-                  ,width: width/4,),
-        Expanded(child: Container(
-          child:
-          Text( dashboardParams.pullRequestSummary.totalIPullTitle +
-              dashboardParams.pullRequestSummary.totalPull),
-        ),
-        ),
-      ],)
-      )),
-  );
-}
+    );
+  }
 
-Widget secondRow(BuildContext context, double width, double height,
-    DashboardParameterList dashboardParams) {
-  return Container(
-    height: (height*4)/5,
-    child:
-    Row(
-      children: [
-        firstColumn(context, dashboardParams),
-        secondColumn(context),
-        thirdColumn(context, dashboardParams),
-      ],
-    ),
-  );
+  Widget thirdColumn(BuildContext context,
+      DashboardParameterList dashboardParams,) {
+    return Expanded(
+      child:
+      Column(
+        children: [
+          Container(
+              margin: const EdgeInsets.only(bottom: 75, top: 100, right: 120),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(18)
+              ,),
+              padding: const EdgeInsets.all(15),
+              child: Text(dashboardParams.pullRequestSummary.pullsOldTitle),),
+          Container(
+              margin: const EdgeInsets.only(bottom: 75, right: 120),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(18)
+              ,),
+              padding: const EdgeInsets.all(15),
+              child: Text(
+                  dashboardParams.pullRequestSummary.pullsHighActivity,),),
+          Container(
+              margin: const EdgeInsets.only(bottom: 75, right: 120),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(18)
+              ,),
+              padding: const EdgeInsets.all(15),
+              child: Text(
+                  dashboardParams.pullRequestSummary.pullsLowActivity,),),
+          Container(
+              margin: const EdgeInsets.only( right: 120),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(18)
+              ,),
+              padding: const EdgeInsets.all(15),
+              child: Text(dashboardParams.pullRequestSummary.pullsLabeled),),
+        ],
+      ),
+    );
+  }
+
+  Widget firstRow(BuildContext context, double width, double height,
+      DashboardParameterList dashboardParams,) {
+
+    return Expanded(child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(18)
+        ,),
+        height: double.maxFinite,
+        child: Row(children: [
+          const Spacer(),
+          SizedBox(
+            width: width/4,
+            child:
+            Text(
+              dashboardParams.issueSummary.totalIssueTitle +
+                dashboardParams.issueSummary.totalIssue,),),
+          SizedBox(
+            width: width/4,
+            child:
+            Text(
+              dashboardParams.issueSummary.dormantIssueTitle +
+                dashboardParams.issueSummary.totalDormantIssue,),),
+          SizedBox(
+            width: width/4,
+            child:
+            Text(
+              dashboardParams.pullRequestSummary.dormantPullTitle +
+                dashboardParams.pullRequestSummary.totalClosedPull,)
+            ,),
+          Expanded(child: Text(
+              dashboardParams.pullRequestSummary.totalIPullTitle +
+              dashboardParams.pullRequestSummary.totalPull,),
+          ),
+        ],),),
+    );
+  }
+
+  Widget secondRow(BuildContext context, double width, double height,
+      DashboardParameterList dashboardParams,) {
+    return SizedBox(
+      height: (height*4)/5,
+      child:
+      Row(
+        children: [
+          firstColumn(context, dashboardParams),
+          secondColumn(context),
+          thirdColumn(context, dashboardParams),
+        ],
+      ),
+    );
+  }
 }
-}
+///Class that creates and displays the line chart found in the repo page
 
 class MyLineChart extends StatelessWidget{
+  ///Constructor
+
   MyLineChart({Key? key, required this.cache}) : super(key: key);
+  ///Instance of our admin dashboard cache
 
   final AdminDashboardCache cache;
+  ///Data that is used in the chart (hardcoded for now)
 
   final data = <double,double>{
     0:0, 1:0.75, 2: 3, 3: 1.2, 4:1, 5:5
@@ -348,14 +366,10 @@ class MyLineChart extends StatelessWidget{
             maxX: 5,
             minY: 0,
             maxY: 5,
-            // titlesData: FlTitlesData(
-            //   bottomTitles: ,
-            //   leftTitles: _leftTitles,
-            // ),
             lineBarsData: [
               LineChartBarData(
                   spots: createPoints()
-              )
+              ,)
             ],
             gridData: FlGridData(
                 show: true,
@@ -365,14 +379,15 @@ class MyLineChart extends StatelessWidget{
                     strokeWidth: 1,
                   );
                 }
-            )
-        )
-    );
+            ,)
+        ,)
+    ,);
   }
-
+  ///Creates the points used in the line chart
   List<FlSpot> createPoints() {
-    List<FlSpot> result = [];
-    for(double x in this.data.keys)
+    ///List of spots to be used in the line chart
+    final result = <FlSpot>[];
+    for(final x in data.keys)
     {
       result.add(FlSpot(x, data[x]??0));
     }

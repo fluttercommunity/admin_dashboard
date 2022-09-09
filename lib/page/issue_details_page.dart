@@ -1,48 +1,29 @@
-import 'package:admin_dashboard/dto/admin_dashboard_cache_model.dart';
 import 'package:admin_dashboard/dto/repo_model.dart';
-import 'package:admin_dashboard/page/drawer_widget.dart';
-import 'package:admin_dashboard/page/mobile_repo_details.dart';
-import 'package:admin_dashboard/page/web_repo_details.dart';
-import 'package:admin_dashboard/service/basic_service.dart';
-import 'package:admin_dashboard/service/fire_base.dart';
+import 'package:admin_dashboard/page/issue_details_mobile.dart';
+import 'package:admin_dashboard/page/issue_details_web.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-import 'issue_details_mobile.dart';
-import 'issue_details_web.dart';
-
-///state of the blank page
+///state of the issue details page
 class IssueDetailsPage extends StatefulWidget {
-  ///cache where the logged in user's ID is stored
-  final AdminDashboardCache cache;
-
-  ///instance of firebaseApp
-  final FirebaseApp firebaseApp;
-
-
-  ///blank page
+  ///Issue page constructor
   const IssueDetailsPage({
-    required this.cache,
     required this.firebaseApp,
     Key? key,
   }) : super(key: key);
 
+  ///instance of firebaseApp
+  final FirebaseApp firebaseApp;
+
   @override
   State<IssueDetailsPage> createState() =>
-      _IssueDetailsPageState(cache, firebaseApp, );
+      _IssueDetailsPageState( firebaseApp, );
 }
 
 class _IssueDetailsPageState extends State<IssueDetailsPage> {
-  _IssueDetailsPageState(this.cache, this.firebaseApp, );
+  _IssueDetailsPageState( this.firebaseApp, );
 
   FirebaseApp firebaseApp;
-  AdminDashboardCache cache;
-
-  // UnimplementedError() {
-  //   void initState() {
-  //     super.initState();
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +35,7 @@ class _IssueDetailsPageState extends State<IssueDetailsPage> {
         .of(context)
         .size
         .height;
-    SimpleRepo simpleRepo = SimpleRepo(name: '');
+    var simpleRepo = SimpleRepo(name: '');
     final args = ModalRoute
         .of(context)!
         .settings
@@ -67,13 +48,12 @@ class _IssueDetailsPageState extends State<IssueDetailsPage> {
     }
   }
   Widget buildNarrow(BuildContext context, SimpleRepo simpleRepo,
-      double myWidth, double myHeight) {
-    return NarrowIssuePage(cache, firebaseApp, simpleRepo, myWidth, myHeight);
+      double myWidth, double myHeight,) {
+    return NarrowIssuePage(firebaseApp, simpleRepo, myWidth, myHeight);
   }
 
   Widget buildWide(BuildContext context, SimpleRepo simpleRepo, double myWidth,
-      double myHeight) {
-    return WideIssuePage(cache, firebaseApp, simpleRepo, myWidth, myHeight,  );
+      double myHeight,) {
+    return WideIssuePage(firebaseApp, simpleRepo, myWidth, myHeight,  );
   }
 }
-

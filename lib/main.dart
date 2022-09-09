@@ -1,14 +1,11 @@
 import 'package:admin_dashboard/dto/constant.dart';
 import 'package:admin_dashboard/provider/provider_list.dart';
 import 'package:admin_dashboard/route/routes.dart';
-import 'package:admin_dashboard/service/fire_base.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_browser_detect/web_browser_detect.dart';
-
-
 
 
 Future<void> main() async {
@@ -31,7 +28,7 @@ Future<void> main() async {
   } else {
     firebaseApp = await Firebase.initializeApp(
       options: FirebaseOptions(
-        authDomain: "admin-dashboard.firebaseapp.com",
+        authDomain: 'admin-dashboard.firebaseapp.com',
         apiKey: EnvironmentConfig.apiKey,
         appId: EnvironmentConfig.appId,
         messagingSenderId: EnvironmentConfig.messagingSenderId,
@@ -39,13 +36,9 @@ Future<void> main() async {
       ),
     );
   }
-  // print(EnvironmentConfig.token);
-  // print(EnvironmentConfig.clientSecret);
-  // print(EnvironmentConfig.redirectUrl);
-  // print(EnvironmentConfig.clientId);
 
   runApp(
-     ProviderScope(
+    ProviderScope(
       child: MyAppRoutes( firebaseApp: firebaseApp,),
     ),
   );
@@ -56,7 +49,7 @@ Future<void> main() async {
 class MyAppRoutes extends ConsumerWidget {
   ///MyAppRoutes constructor
   const MyAppRoutes(  {required this.firebaseApp,   Key? key}) :
-         super(key: key);
+        super(key: key);
 
   ///instance of firebaseApp
   final FirebaseApp firebaseApp;
@@ -66,7 +59,6 @@ class MyAppRoutes extends ConsumerWidget {
     final cache = ref.read(cacheProvider);
     //to detect if web
     final browser = Browser.detectOrNull();
-    print('${browser?.browser ?? 'Wrong platform'} ${browser?.version ?? 'Wrong platform'}');
     if(browser == null){
       cache.isWeb = false;
     }
@@ -79,9 +71,9 @@ class MyAppRoutes extends ConsumerWidget {
       initialRoute: RouteGenerator.loginPage,
       onGenerateRoute: //RouteGenerator.generateRoute,
           (settings) {
-                  return RouteGenerator.generateRoute(settings, cache,
-                      firebaseApp, );
-                },
+        return RouteGenerator.generateRoute(settings, //cache,
+          firebaseApp, );
+      },
       debugShowCheckedModeBanner: false,
     );
   }
@@ -110,5 +102,4 @@ class EnvironmentConfig {
   dotenv.get('MY_MESSAGINGSENDERID', fallback: 'no .env');
   ///Our projectID from the firebase console as an environment variable
   static final projectId = dotenv.get('MY_PROJECTID', fallback: 'no .env');
-
 }

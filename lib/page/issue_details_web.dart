@@ -1,133 +1,177 @@
-
-import 'package:admin_dashboard/service/issue_service.dart';
+import 'package:admin_dashboard/dto/admin_dashboard_cache_model.dart';
+import 'package:admin_dashboard/dto/constant.dart';
+import 'package:admin_dashboard/dto/issue.dart';
+import 'package:admin_dashboard/dto/repo_model.dart';
+import 'package:admin_dashboard/dto/table_data.dart';
+import 'package:admin_dashboard/page/drawer_widget.dart';
+import 'package:admin_dashboard/provider/provider_list.dart';
+import 'package:admin_dashboard/service/table_data_service.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../dto/admin_dashboard_cache_model.dart';
-import '../dto/issue_model.dart';
-import '../dto/repo_model.dart';
-import '../provider/provider_list.dart';
-import '../service/fire_base.dart';
-import 'drawer_widget.dart';
-
-class WideIssuePage extends  ConsumerWidget{
-  final AdminDashboardCache cache;
-
-  ///instance of firebaseApp
+///Page displayed when a wide (web or tablet) device is used
+class WideIssuePage extends ConsumerWidget {
+  ///Constructor for Wide Issue Page
+   const WideIssuePage(this.firebaseApp, this.simpleRepo, this.myWidth,
+      this.myHeight,);
+  ///Instance of firebaseApp
   final FirebaseApp firebaseApp;
+  ///Instance of simpleRepo
   final SimpleRepo simpleRepo;
+  ///Width of the screen
   final double myWidth;
+  ///Height of the screen
   final double myHeight;
-
-  WideIssuePage(this.cache, this.firebaseApp, this.simpleRepo, this.myWidth,
-      this.myHeight);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
+    final cache = ref.read(cacheProvider);
+    final dataProvider = GithubTableDataProvider(cache.simpleRepo.name);
+    return WideIssueWidget(firebaseApp, simpleRepo, myWidth,
+        myHeight, cache, dataProvider,);
+  }
+}
 
-    final issueProviderImplementor = ref.read(issueProvider);
+///Widget for the web/tablet version of our application
+class WideIssueWidget extends StatefulWidget {
+  ///Constructor
+  const WideIssueWidget(this.firebaseApp, this.simpleRepo, this.myWidth,
+      this.myHeight, this.cache, this.tableDataProvider,);
+  @override
+  State<StatefulWidget> createState() {
+    return WideIssueWidgetState(
+        firebaseApp, simpleRepo, myWidth, myHeight,
+        cache, tableDataProvider,);
+  }
 
+  ///instance of firebaseApp
+  final FirebaseApp firebaseApp;
+  ///instance of simpleRepo
+  final SimpleRepo simpleRepo;
+  ///width of the screen
+  final double myWidth;
+  ///height of the screen
+  final double myHeight;
+  /// Instance of our Admin Dashboard's cache
+  final AdminDashboardCache cache;
+  ///Instance of the provider for the tableData
+  final TableDataProviderInterface tableDataProvider;
+}
+
+
+///State for the wide issue widget
+class WideIssueWidgetState extends State<WideIssueWidget> {
+  ///Constructor
+  WideIssueWidgetState( this.firebaseApp,
+      this.simpleRepo,
+      this.myWidth,
+      this.myHeight, this.cache, this.tableDataProvider,);
+
+  ///Instance of firebase App
+  final FirebaseApp firebaseApp;
+  ///Instance of simple repo
+  final SimpleRepo simpleRepo;
+  ///Width of the screen
+  final double myWidth;
+  ///Height of the screen
+  final double myHeight;
+  ///Instance of our admin dashboard's cache
+  final AdminDashboardCache cache;
+  ///Instance of the provider for the table data
+  final TableDataProviderInterface tableDataProvider;
+  ///contains the data of all the issues for the chosen repo
+  late Future<TableData> data;
+  ///subset of the data of all the issues that matches the criteria chosen
+  late TableData currentData;
+  @override
+  void initState() {
+    super.initState();
+    data = tableDataProvider.getOpenInLastSixMonths();
+  }
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: Colors.grey,
-        drawer: DrawerWidget(
-          cache,
-          firebaseApp,
+      backgroundColor: Colors.grey,
+      drawer: DrawerWidget(
+        firebaseApp,
+      ),
+      appBar: AppBar(
+        backgroundColor: Colors.deepPurpleAccent,
+      ),
+      body:
+      ConstrainedBox(
+        constraints: BoxConstraints(minWidth: width),
+        child: FutureBuilder<TableData>(
+          future: data,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasData) {
+                currentData = snapshot.data!;
+                //return currentData.getDataTable();
+                return currentData.getCustomScrollViewWide(this);
+              } else if (snapshot.hasError) {
+                return Text('${snapshot.error}');
+              }
+            }
+            return const LinearProgressIndicator();
+          },
         ),
-        appBar: AppBar(
-          backgroundColor: Colors.deepPurpleAccent,
-        ),
-        // body: buildIssueTable(context),
-        body: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          verticalDirection: VerticalDirection.down,
+      ),
+
+      bottomSheet: buildBottomSheet(context, cache,
+      ),
+    );
+  }
+
+  ///The widget for our application's bottom sheet
+  Widget buildBottomSheet(BuildContext context, AdminDashboardCache cache,
+      ) {
+    return Container(
+      constraints: const BoxConstraints(
+        maxHeight: 30,
+        maxWidth: 5000,
+        minWidth: 150,
+        minHeight: 20,
+      ),
+      child: BottomAppBar(
+        color: Colors.black12,
+        child: Row(
           children: <Widget>[
-            Center(
-              child:buildIssueTable(issueProviderImplementor),
-            )
+            const Spacer(),
+            Container(
+              alignment: Alignment.center,
+              child: Text(cache.simpleRepo.name),
+            ),
+            const Spacer(),
+            Container(
+              alignment: Alignment.center,
+              child: const Text(Constants.statusKeyword),
+            ),
+            const Spacer(),
+            Container(
+              alignment: Alignment.center,
+              child: const Text(Constants.ownerKeyword),
+            ),
+            const Spacer(),
           ],
         ),
-        bottomSheet: buildBottomSheet(context)
+      ),
     );
   }
 
-  Widget buildBottomSheet(BuildContext context) {
-    return Container(
-        constraints: const BoxConstraints(
-          maxHeight: 30,
-          maxWidth: 5000,
-          minWidth: 150,
-          minHeight: 20,
-        ),
-        child: BottomAppBar(
-            color: Colors.black12,
-            child: Row(
-              children: <Widget>[
-                const Spacer(),
-                Container(
-                  alignment: Alignment.center,
-                  child: Text(cache.simpleRepo.name),
-                ),
-                const Spacer(),
-                Container(
-                  alignment: Alignment.center,
-                  child: const Text('Status'),
-                ),
-                const Spacer(),
-                Container(
-                  alignment: Alignment.center,
-                  child: const Text('Owner'),
-                ),
-                const Spacer(),
-              ],
-            )
-        )
-    );
+  ///Sort method that sorts the table by ascending
+  void sort(String title) {
+    setState(() {
+      currentData.sort(title);
+    });
   }
-  DataTable buildIssueTable(IssueProviderInterface issueProviderImplementor){
-    List<String> issues;
-    issues = ["testtesttest"];
-    return DataTable(
-        columns: [
-          DataColumn(label: Text("Test"),
-          numeric: false,
-          ),
-          DataColumn(label: Text("label"),
-            numeric: false,
-          ),
 
-        ],
-        rows:[]
-    );
+  ///Sort method that sorts the table by descending
+  void reverseSort(String title) {
+    setState(() {
+      currentData.reverseSort(title);
+    });
   }
-//   Widget buildIssueTable(BuildContext context){
-//     final columns = ['Placeholder 1', 'Placeholder 2', 'Place holder 3'];
-//     return DataTable(
-//         columns: getColumns(columns),
-//         rows: getRows(issues),
-//     );
-//   }
-//   List<DataColumn> getColumns(List<String> columns){
-//     return columns.map((String column){
-//       return DataColumn(
-//         label: Text(column),);
-//
-//     }).toList();
-//   }
-//   List<DataRow> getRows(List<Issue> issues) => issues.map((Issue issue)){
-//   FireBaseService firebaseService;
-//     final issues = firebaseService.getAllRepoIssues;
-//
-// };
 }

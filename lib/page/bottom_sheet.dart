@@ -1,20 +1,22 @@
 import 'package:admin_dashboard/dto/admin_dashboard_cache_model.dart';
+import 'package:admin_dashboard/dto/constant.dart';
+import 'package:admin_dashboard/dto/repo_model.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../dto/repo_model.dart';
-
+///Bottom sheet where the repo owner, status and name are displayed
 class BottomSheet extends StatelessWidget{
+  ///Constructor
+  const BottomSheet( this.cache, this.firebaseApp, this.simpleRepo,
+      {Key? key,}):super(key: key);
+
+  ///Instance of our admin dashboard's cache
   final AdminDashboardCache cache;
 
   ///instance of firebaseApp
   final FirebaseApp firebaseApp;
 
+  ///Instance of simpleRepo object used in the repository page
   final SimpleRepo simpleRepo;
-
-  BottomSheet(this.cache, this.firebaseApp, this.simpleRepo);
-  Widget buildBottomSheet(BuildContext context) {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,26 +38,17 @@ class BottomSheet extends StatelessWidget{
                 const Spacer(),
                 Container(
                   alignment: Alignment.center,
-                  child: const Text('Status'),
+                  child: const Text(Constants.statusWord),
                 ),
                 const Spacer(),
                 Container(
                   alignment: Alignment.center,
-                  child: const Text('     Owner'),
+                  child: const Text(Constants.owner),
                 ),
                 const Spacer(),
               ],
-            )
-        )
+            ),
+        ),
     );
-  }
-
-  throw UnimplementedError();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
   }
 }
