@@ -19,3 +19,4 @@ During the GSoC period, we were able to
 1. Some data regarding the repository dashboard still uses dummy providers, not real data from the github API 
 2. Create an algorithm which decides whether a repository's status is RED, ORANGE or GREEN (Indicating whether or not it requires a maintainer/admins attention)
 3. Implement a trigger to build and deploy to pub.dev
+4. Previously, our application deployed and was hosted succesfully by firebase, but recently an error started occuring to the untouched code where you now face a bug whenever you try to login via Github on only the web version. We are currently still waiting on firebase's documentation to be updated inorder to implement how to login via github on firebase's new version. 
