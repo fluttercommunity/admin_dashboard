@@ -9,11 +9,13 @@ We are looking to implement a Flutter Community Dashboard that assists admins by
 
 ## What has been achieved so far
 During the GSoC period, we were able to 
-1. Succesfully implement logging in via github
-2. Retrieve and display a list of all the repositories in the flutter community
-3. Create a Repository dashboard that displays statistical data regarding the dashboard
-4. Create a table format to be able to display a list of issues/PRs based on the criteria chosen by the user
-5. Retrieve and display issues older than 90 days from a repository
+1. Initialize firebase and create a github action to deploy to firebase hosting
+2. Succesfully implement logging in via github
+3. Retrieve and display a list of all the repositories in the flutter community
+4. Create a Repository dashboard that displays statistical data regarding the repository
+5. Create a sortable table format to be able to display a list of issues/PRs based on the criteria chosen by the user
+6. Retrieve and display issues based on criterias chosen by the user
+7. Everything regarding the frontend
 
 ## What is left
 1. Some data regarding the repository dashboard still uses dummy providers, not real data from the github API 
