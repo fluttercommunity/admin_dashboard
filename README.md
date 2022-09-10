@@ -10,7 +10,7 @@ We are looking to implement a Flutter Community Dashboard that assists admins by
 [GitHub Pages](https://pages.github.com/).
 ## More about the project
 This project was initially started as a GSoC'22 project with [@abdelrahmanmagdii](https://github.com/abdelrahmanmagdii) as the mentee and [@mhadaily](https://github.com/mhadaily) as the mentor.  <br />
-This entire project was implemented using flutter for the frontend and Firebase used in the backend for authentication purposes (as a single sign-on provider) so that it manages access to github and manages access to specific report pages depending on the access level of the user. <br /> Moreover, the github APIs are not suited to create reports reflecting the repositories' variations over time. Therefore, the firebase backend will also be used to run periodic aggregation APIs and store statistical time variant information so that reports could be created that show the KPI (Key Performance Indicator) variations over time.
+This entire project was implemented using flutter for the frontend and Firebase used in the backend. Firebase was used for authentication purposes (as a single sign-on provider) so that it manages access to github and manages access to specific report pages depending on the access level of the user. <br /> Moreover, the github APIs are not suited to create reports reflecting the repositories' variations over time. Therefore, the firebase backend will also be used to run periodic aggregation APIs and store statistical time variant information so that reports could be created that show the KPI (Key Performance Indicator) variations over time.
 
 ## What has been achieved so far
 During the GSoC period, we were able to 
