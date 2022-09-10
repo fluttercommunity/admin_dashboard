@@ -95,6 +95,9 @@ class NarrowIssueWidgetState extends State<NarrowIssueWidget> {
       ),
       appBar: AppBar(
         backgroundColor: Colors.deepPurpleAccent,
+        title: Text(
+          cache.simpleRepo.name.replaceAll(RegExp('/fluttercommunity/'), ''),
+        ),
       ),
       body:
       ConstrainedBox(
