@@ -136,7 +136,9 @@ class NarrowIssueWidgetState extends State<NarrowIssueWidget> {
             const Spacer(),
             Container(
               alignment: Alignment.center,
-              child: Text(cache.simpleRepo.name),
+              child: Text(
+                  cache.simpleRepo.name.
+                  replaceAll(RegExp('/fluttercommunity/'),''),),
             ),
             const Spacer(),
             Container(

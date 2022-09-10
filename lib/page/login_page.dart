@@ -85,13 +85,6 @@ class _LoginWidgetState extends State<LoginWidget> {
         ),
 
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {
-          Navigator.of(context).pushReplacementNamed(
-              RouteGenerator.issueDetailPage,)
-        },
-        child: const Icon(Icons.add),
-      ),
     );
   }
 

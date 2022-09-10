@@ -108,7 +108,8 @@ class _WebSummaryDashboard extends State<WebSummaryDashboard>{
         appBar: AppBar(
           backgroundColor: Colors.deepPurpleAccent,
           title: Text(
-              cache.simpleRepo.name.replaceAll(RegExp('/fluttercommunity/'),'')),
+              cache.simpleRepo.name
+                  .replaceAll(RegExp('/fluttercommunity/'),''),),
         ),
         body:
         FutureBuilder<DashboardParameterList>(
@@ -184,10 +185,10 @@ class _WebSummaryDashboard extends State<WebSummaryDashboard>{
       textBaseline: TextBaseline.alphabetic,
       children: [
         GestureDetector(
-        onTap: () => {
-         Navigator.of(context).pushReplacementNamed(
-             RouteGenerator.issueDetailPage,)
-         },
+          onTap: () => {
+            Navigator.of(context).pushReplacementNamed(
+                RouteGenerator.issueDetailPage)
+          },
          child:
          Container(
             margin: const EdgeInsets.only(
@@ -305,9 +306,14 @@ class _WebSummaryDashboard extends State<WebSummaryDashboard>{
           SizedBox(
             width: width/4,
             child:
-            Text(
+             GestureDetector(
+              onTap: () => {
+              Navigator.of(context).pushReplacementNamed(
+                RouteGenerator.issueDetailPage,)
+               }, child:
+              Text(
               dashboardParams.issueSummary.totalIssueTitle +
-                dashboardParams.issueSummary.totalIssue,),),
+                dashboardParams.issueSummary.totalIssue,),),),
           SizedBox(
             width: width/4,
             child:
