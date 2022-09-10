@@ -4,8 +4,13 @@
 The Flutter Community provides several packages to the community and pub. dev that all differ in regards to maintenance requirements.
 
 The Flutter Community admins struggle to keep up with all of the changes, releases, changelogs, and activities on all packages. Two of the biggest challenges include keeping track of releases, as well as the inability to allow maintainers to trigger package releases on pub. dev without giving them super admin access.
+
 ## The solution
 We are looking to implement a Flutter Community Dashboard that assists admins by rounding up and providing the admins with information regarding issues, latest activities on repositories, maintainers, level of access and implementing a trigger to build and deploy to pub.dev, and more.
+[GitHub Pages](https://pages.github.com/).
+## More about the project
+This project was initially started as a GSoC'22 project with [@abdelrahmanmagdii](https://github.com/abdelrahmanmagdii) as the mentee and [@mhadaily](https://github.com/mhadaily) as the mentor.  <br />
+This entire project was implemented using flutter for the frontend and Firebase used in the backend for authentication purposes (as a single sign-on provider) so that it manages access to github and manages access to specific report pages depending on the access level of the user. <br /> Moreover, the github APIs are not suited to create reports reflecting the repositories' variations over time. Therefore, the firebase backend will also be used to run periodic aggregation APIs and store statistical time variant information so that reports could be created that show the KPI (Key Performance Indicator) variations over time.
 
 ## What has been achieved so far
 During the GSoC period, we were able to 
