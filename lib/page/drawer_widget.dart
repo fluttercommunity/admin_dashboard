@@ -1,50 +1,22 @@
 import 'package:admin_dashboard/authentication/authentication.dart';
-import 'package:admin_dashboard/dto/admin_dashboard_cache_model.dart';
 import 'package:admin_dashboard/dto/constant.dart';
-import 'package:admin_dashboard/dto/repo_model.dart';
 import 'package:admin_dashboard/route/routes.dart';
-import 'package:admin_dashboard/service/fire_base.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 ///Drawer widget that is used for navigation throughout the app
-class DrawerWidget extends StatelessWidget {
+class DrawerWidget extends StatelessWidget{
   ///Constructor for the drawer widget
 
-  const DrawerWidget(this.cache,// this.fire,
+  const DrawerWidget(
       this.firebaseApp, {Key? key,}) : super(key: key);
   ///Instance of firebaseApp
   final FirebaseApp firebaseApp;
 
-  ///Our cache that is used throughout the app
- final AdminDashboardCache cache;
-  ///
- //final BasicServiceInterface fire;
-
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-        child: Material(
-            color: Colors.blue,
-            child: ListView(
-              children: <Widget>[
-                const SizedBox(height: 48),
-                buildMenuItem(
-                  text: Constants.login,
-                  icon: Icons.add,
-                  onClicked: () =>  {login(context)},
-                ),
-                //
-                buildMenuItem(text: Constants.printRepos,
-                    icon: Icons.add,
-                  onClicked: () =>{
-                  Navigator.of(context).pushNamed(RouteGenerator.repoPage)
-                  },
-                ),
-              ],
-            ),
-        ),
-    );
+
+    return buildLoggedIn(context);
   }
   ///Build for items in the drawer widget
   Widget buildMenuItem({
@@ -60,26 +32,63 @@ class DrawerWidget extends StatelessWidget {
       onTap: onClicked,
     );
   }
-  ///Prints a list of all repos in a specific organization
-  Future<List<SimpleRepo>> printRepos(BuildContext context) async {
-    FireBaseService fireBaseService;
-    fireBaseService = FireBaseService(firebaseApp);
-
-    final list = await fireBaseService.getAllRepos(
-        context,
-        cache,
-    );
-    return list;
-  }
-  ///Function that handles logging in via github's API, calls githubLogin
+  ///the login method
   Future<void> login(BuildContext context) async {
-    FirebaseAuthenticationService firebaseAuthenticationService;
-    // print("Step A");
-    firebaseAuthenticationService = FirebaseAuthenticationService(firebaseApp);
-    // print("Step B");
-    String? uid;
-    uid = await firebaseAuthenticationService.githubLogin(context, cache);
-    // print("Step C");
-    debugPrint('uid is ${uid!}');
+   FirebaseAuthenticationService(firebaseApp);
+  }
+
+  ///Build drawer widget for when a user isn't logged in
+  Widget buildNotLoggedIn(BuildContext context) {
+    return Drawer(
+      child: Material(
+        color: Colors.deepPurple,
+        child: ListView(
+          children: <Widget>[
+            const SizedBox(height: 48),
+            buildMenuItem(
+              text: Constants.login,
+              icon: Icons.play_arrow,
+              onClicked: () =>  {login(context)},
+            ),
+            //
+            buildMenuItem(text: Constants.printRepos,
+              icon: Icons.play_arrow,
+              onClicked: () =>{
+                Navigator.of(context).pushReplacementNamed(
+                    RouteGenerator.repoPage,)
+              },
+            ),
+            buildMenuItem(text: 'placeholder',
+                icon: Icons.abc,
+                onClicked: () => {
+                },
+            ),
+          ],
+        ),
+      ),
+    );
+
+  }
+  ///Drawer widget if the user is logged in
+  Widget buildLoggedIn(BuildContext context) {
+    return Drawer(
+      child: Material(
+        color: Colors.deepPurple,
+        child: ListView(
+          children: <Widget>[
+            const SizedBox(height: 48),
+            //
+            buildMenuItem(text: Constants.printRepos,
+              icon: Icons.play_arrow,
+              onClicked: () =>{
+                Navigator.of(context).pushReplacementNamed(
+                    RouteGenerator.repoPage,)
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+
   }
 }

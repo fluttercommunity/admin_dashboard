@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/dto/constant.dart';
 import 'package:flutter/material.dart';
 
 /// Utility class used to create and display dialogs
@@ -6,7 +7,7 @@ class ViewUtil {
   /// set up the AlertDialog
   static void showMessage(String title, String message, BuildContext context) {
     final Widget okButton = TextButton(
-      child: const Text('OK'),
+      child: const Text(Constants.ok),
       onPressed: () {
         Navigator.pop(context);
       },

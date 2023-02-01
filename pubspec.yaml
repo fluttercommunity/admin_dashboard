@@ -19,8 +19,8 @@ dependencies:
   build_runner:
   cupertino_icons: ^1.0.2
 #  These 2 are use for mobile only
-  firebase_auth: ^3.3.19
-  firebase_core: ^1.17.1
+  firebase_auth: ^3.6.3
+  firebase_core: ^1.20.1
 
   flutter_riverpod: ^1.0.0
   github_sign_in: ^0.0.5-dev.4
@@ -29,6 +29,8 @@ dependencies:
   json_annotation:
   easy_sidemenu: ^0.3.1
   flutter_dotenv: ^5.0.2
+  fl_chart: ^0.55.1
+  web_browser_detect: ^2.0.3
 #  cloud_functions: ^3.3.2
 
 dev_dependencies:
@@ -42,6 +44,5 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-#    - .env
     - env_var.env
   uses-material-design: true

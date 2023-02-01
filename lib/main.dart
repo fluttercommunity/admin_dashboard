@@ -5,37 +5,40 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-
-
+import 'package:web_browser_detect/web_browser_detect.dart';
 
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: 'env_var.env');
-  // await Firebase.initializeApp(
-  //   name: Constants.projectName,
-  //   options:  FirebaseOptions(
-  //     apiKey: EnvironmentConfig.apiKey,
-  //     appId: EnvironmentConfig.appId,
-  //     messagingSenderId: EnvironmentConfig.messagingSenderId,
-  //     projectId: EnvironmentConfig.projectId,
-  //   ),
-  // );
 
-  final firebaseApp = await Firebase.initializeApp(
-    name: Constants.projectName,
-    options:  FirebaseOptions(
-      apiKey: EnvironmentConfig.apiKey,
-      appId: EnvironmentConfig.appId,
-      messagingSenderId: EnvironmentConfig.messagingSenderId,
-      projectId: EnvironmentConfig.projectId,
-    ),
-  );
+  final browser = Browser.detectOrNull();
+  FirebaseApp firebaseApp;
 
+  if(browser == null) {
+    firebaseApp = await Firebase.initializeApp(
+      name: Constants.projectName,
+      options: FirebaseOptions(
+        apiKey: EnvironmentConfig.apiKey,
+        appId: EnvironmentConfig.appId,
+        messagingSenderId: EnvironmentConfig.messagingSenderId,
+        projectId: EnvironmentConfig.projectId,
+      ),
+    );
+  } else {
+    firebaseApp = await Firebase.initializeApp(
+      options: FirebaseOptions(
+        authDomain: 'admin-dashboard.firebaseapp.com',
+        apiKey: EnvironmentConfig.apiKey,
+        appId: EnvironmentConfig.appId,
+        messagingSenderId: EnvironmentConfig.messagingSenderId,
+        projectId: EnvironmentConfig.projectId,
+      ),
+    );
+  }
 
   runApp(
-     ProviderScope(
+    ProviderScope(
       child: MyAppRoutes( firebaseApp: firebaseApp,),
     ),
   );
@@ -45,8 +48,8 @@ Future<void> main() async {
 /// to the homepage and calls the class generateRoute when navigating
 class MyAppRoutes extends ConsumerWidget {
   ///MyAppRoutes constructor
-  const MyAppRoutes( {required this.firebaseApp,   Key? key}) :
-         super(key: key);
+  const MyAppRoutes(  {required this.firebaseApp,   Key? key}) :
+        super(key: key);
 
   ///instance of firebaseApp
   final FirebaseApp firebaseApp;
@@ -54,15 +57,23 @@ class MyAppRoutes extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cache = ref.read(cacheProvider);
-    //final fire = ref.read(fireBaseService);
+    //to detect if web
+    final browser = Browser.detectOrNull();
+    if(browser == null){
+      cache.isWeb = false;
+    }
+    else{
+      cache.isWeb = true;
+    }
+
     return MaterialApp(
       onGenerateTitle: (context) => Constants.welcomePageTitle,
-      initialRoute: RouteGenerator.welcomePage,
+      initialRoute: RouteGenerator.loginPage,
       onGenerateRoute: //RouteGenerator.generateRoute,
           (settings) {
-                  return RouteGenerator.generateRoute(settings, cache,
-                      firebaseApp,);
-                },
+        return RouteGenerator.generateRoute(settings, //cache,
+          firebaseApp, );
+      },
       debugShowCheckedModeBanner: false,
     );
   }
@@ -91,5 +102,4 @@ class EnvironmentConfig {
   dotenv.get('MY_MESSAGINGSENDERID', fallback: 'no .env');
   ///Our projectID from the firebase console as an environment variable
   static final projectId = dotenv.get('MY_PROJECTID', fallback: 'no .env');
-
 }
