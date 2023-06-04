@@ -9,26 +9,28 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+
 ///Repo page that is displayed on mobile
 class NarrowRepoPage extends ConsumerWidget {
-  ///Constructor for narrow page
-  const NarrowRepoPage(
-    this.firebaseApp,
-    this.simpleRepo,
-    this.myWidth,
-    this.myHeight,
-  );
+  /// Constructor for narrow page
+  const NarrowRepoPage({
+    Key? key,
+    required this.firebaseApp,
+    required this.simpleRepo,
+    required this.myWidth,
+    required this.myHeight,
+  }) : super(key: key);
 
-  ///instance of firebaseApp
+  /// Instance of firebaseApp
   final FirebaseApp firebaseApp;
 
-  ///Instance of simple repo
+  /// Instance of simple repo
   final SimpleRepo simpleRepo;
 
-  ///Width of the screen
+  /// Width of the screen
   final double myWidth;
 
-  ///Height of the screen
+  /// Height of the screen
   final double myHeight;
 
   @override
@@ -36,11 +38,11 @@ class NarrowRepoPage extends ConsumerWidget {
     final cache = ref.read(cacheProvider);
     final dashboardProvider = ref.read(myDashboardProvider);
     return MobileSummaryDashboard(
-      cache,
-      firebaseApp,
-      dashboardProvider,
-      myWidth,
-      myHeight,
+      cache: cache,
+      firebaseApp: firebaseApp,
+      dashboardProvider: dashboardProvider,
+      myWidth: myWidth,
+      myHeight: myHeight,
     );
   }
 }
